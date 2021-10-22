@@ -1,0 +1,2 @@
+// Connection string
+database                    : postgresql://postgres:root@localhost:5432/integraciones
