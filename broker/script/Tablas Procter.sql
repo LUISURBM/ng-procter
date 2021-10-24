@@ -6,16 +6,16 @@ CREATE TABLE integraciones.planning
 (
     reg_status character varying(1) COLLATE pg_catalog."default" NOT NULL DEFAULT '1'::character varying,
     loadid integer NOT NULL DEFAULT 0,
-    originlocationid character varying(20) COLLATE pg_catalog."default",
-    vehicletype character varying(10) COLLATE pg_catalog."default",
+    originlocationid character varying(20) COLLATE pg_catalog."default", - 
+    vehicletype character varying(10) COLLATE pg_catalog."default", - 
     totalweightsum numeric(15,2) NOT NULL DEFAULT 0.00,
     totalvolumesum numeric(15,2) NOT NULL DEFAULT 0.00,
     totalpiecessum numeric(15,2) NOT NULL DEFAULT 0.00,
     totaldeliverycount numeric(15,2) NOT NULL DEFAULT 0.00,
     loadorderid character varying(20) COLLATE pg_catalog."default",
-    licenseplate character varying(20) COLLATE pg_catalog."default",
-    drivername character varying(80) COLLATE pg_catalog."default",
-    drivercc character varying(20) COLLATE pg_catalog."default",
+    licenseplate character varying(20) COLLATE pg_catalog."default", - 6 digitos 3 letras 3 numeros
+    drivername character varying(80) COLLATE pg_catalog."default", - carcteres no especiales sin numeros 80
+    drivercc character varying(20) COLLATE pg_catalog."default", - 10 digitos
     creation_date timestamp without time zone NOT NULL DEFAULT (now())::timestamp without time zone,
     creation_user character varying(20) COLLATE pg_catalog."default" NOT NULL DEFAULT ''::character varying,
     last_update timestamp without time zone NOT NULL DEFAULT '0099-01-01 00:00:00'::timestamp without time zone,
@@ -51,6 +51,8 @@ CREATE TABLE integraciones.planning_delivery
     weight numeric(15,2) NOT NULL DEFAULT 0.00,
     volume numeric(15,2) NOT NULL DEFAULT 0.00,
     pieces numeric(15,2) NOT NULL DEFAULT 0.00,
+    enviodate timestamp without time zone DEFAULT '0099-01-01 00:00:00'::timestamp without time zone,
+    enviado character varying(1) COLLATE pg_catalog."default" DEFAULT 'N'::character varying,
     creation_date timestamp without time zone NOT NULL DEFAULT (now())::timestamp without time zone,
     creation_user character varying(20) COLLATE pg_catalog."default" NOT NULL DEFAULT ''::character varying,
     last_update timestamp without time zone NOT NULL DEFAULT '0099-01-01 00:00:00'::timestamp without time zone,
@@ -165,6 +167,7 @@ CREATE TABLE integraciones.rejects
     reason integer NOT NULL DEFAULT 0,
     co character varying(20) COLLATE pg_catalog."default",
     commentario character varying(20) COLLATE pg_catalog."default",
+    enviodate timestamp without time zone DEFAULT '0099-01-01 00:00:00'::timestamp without time zone,
     enviado character varying(1) COLLATE pg_catalog."default" DEFAULT 'N'::character varying,
     CONSTRAINT rejects_pkey PRIMARY KEY (loadorderid, loadid)
 )

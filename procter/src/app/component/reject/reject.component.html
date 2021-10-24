@@ -1,0 +1,156 @@
+<div class="row">
+	<div class="col">
+		<h5 class="card-title">Nuevo Rechazo</h5>
+		<h6 class="card-subtitle">Escriba la información del rechazo</h6>
+		<div class="card">
+			<div class="card-body">
+				<h5 class="sub-title">Información de la planilla:</h5>
+
+				<div class="row" [formGroup]="group">
+					<div class="col-12">
+						<div class="form-group row mobile-inputs">
+							<div class="col-12 col-sm-6 col-md-4 col-lg-4 col-xl-2 col-xl-offset-1">
+								<label class="col-form-label">Id. Orden:</label>
+								<div class="input-group ">
+									<input type="text" class="form-control form-control-primary" id="loadorderid"
+										placeholder="# de la orden" (change)="loadorderid()"
+										formControlName="loadorderid" list="planningdatabyorderid" size="10"
+										autocomplete="off" />
+									<div class="input-group-append">
+										<button type="button" class="btn btn-outline-secondary"
+											(click)="group.reset()">🗑</button>
+									</div>
+								</div>
+							</div>
+							<div class="col-12 col-sm-6 col-md-4 col-lg-4 col-xl-2">
+								<label class="col-form-label">Id. Carga:</label>
+								<div class="input-group ">
+									<input type="text" class="form-control form-control-default"
+										list="planningdatabyloadid" placeholder="# de la carga" (change)="loadid()"
+										autocomplete="off" size="10" formControlName="loadid">
+									<div class="input-group-append">
+										<button type="button" class="btn btn-outline-secondary"
+											(click)="clear('loadid')">🗑</button>
+									</div>
+								</div>
+							</div>
+							<div class="col-12 col-sm-6 col-md-4 col-lg-4 col-xl-2">
+								<label class="col-form-label">Id. Envío:</label>
+								<div class="input-group ">
+									<input type="text" class="form-control" placeholder="# Envío"
+										list="deliverdatabyloadid" (change)="deliveryid()" autocomplete="off" size="10"
+										formControlName="deliveryid">
+									<div class="input-group-append">
+										<button type="button" class="btn btn-outline-secondary"
+											(click)="clear('deliveryid')">🗑</button>
+									</div>
+								</div>
+							</div>
+							<div class="col-12 col-sm-6 col-md-6 col-lg-4 col-xl-2">
+								<label class="col-form-label">Id. Factura:</label>
+								<div class="input-group ">
+									<input type="text" class="form-control form-control-info" placeholder="# Factura"
+										list="invoicedatabydeliveryid" list="invoicedatabydeliveryid"
+										(change)="invoiceid()" autocomplete="off" size="10" formControlName="invoiceid">
+									<div class="input-group-append">
+										<button type="button" class="btn btn-outline-secondary"
+											(click)="clear('invoiceid')">🗑</button>
+									</div>
+								</div>
+							</div>
+							<div class="col col-sm-6">
+								<label class="col-form-label">Número de Referencia:</label>
+								<div class="input-group ">
+									<input type="text" class="form-control" list="refnumberdatabyinvoiceid"
+										list="refnumberdatabyinvoiceid" (change)="productid()" autocomplete="off"
+										size="10" placeholder="# de Referencia" formControlName="referencenumber">
+									<div class="input-group-append">
+										<button type="button" class="btn btn-outline-secondary"
+											(click)="clear('referencenumber')">🗑</button>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+
+				<div *ngIf="group.valid">
+					<hr>
+					<div class="row" [formGroup]="rejection">
+						<div class="col">
+							<h5 class="sub-title">Información del rechazo:</h5>
+							<div class="row mobile-inputs">
+								<div class="col-12 col-sm-4">
+									<label class="col-form-label">Motivo:</label>
+									<div class="ml-auto">
+										<select class="custom-select form-control" formControlName="reason">
+											<option selected disabled value>-- SIN SELECCIÓN --</option>
+											<option selected blankoption *ngFor="let bundle of bundleSrv.rejectTypes"
+												[value]="bundle.table_code">{{bundle.descripcion}}</option>
+										</select>
+									</div>
+								</div>
+								<div class="col-12 col-sm-4">
+									<label class="col-form-label">Cantidad:</label>
+									<input type="number" class="form-control" id="quantity" placeholder="Cantidad"
+										formControlName="quantity">
+								</div>
+								<div class="col col-sm-4">
+									<label class="col-form-label">Unidad:</label>
+									<select class="custom-select form-control" formControlName="salesunit">
+										<option selected disabled value>-- SIN SELECCIÓN --</option>
+										<option selected blankoption *ngFor="let bundle of bundleSrv.rejectUnits"
+											[value]="bundle.table_code">{{bundle.descripcion}}</option>
+									</select>
+								</div>
+								<div class="col col-lg-4">
+									<label class="col-form-label">Fecha rechazo:</label>
+									<input class="form-control" placeholder="Fecha rechazo" [min]="minDate"
+										[max]="maxDate" (change)="rejectdate()" type="datetime-local"
+										formControlName="rejectdate">
+								</div>
+								<div class="col" [class.has-success]="reject?.controls?.comentario?.valid!"
+									[class.has-danger]="reject?.controls?.comentario?.invalid!">
+									<label class="col-form-label">Comentario:</label>
+									<textarea class="form-control" rows="1" formControlName="comentario"></textarea>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div *ngIf="messages?.length > 0">
+					<pre>
+						<ngb-alert *ngFor="let message of messages" [type]="message.level" [dismissible]="message.dismissible">{{message.message}}</ngb-alert>
+					</pre>
+				</div>
+				<ng-container *ngIf="group.dirty || rejection.dirty">
+					<hr>
+					<button class="ml-auto btn btn-sm btn-outline-primary"
+						(click)="group.reset();rejection.reset()">Limpiar</button>
+					<button *ngIf="messages?.length < 1 && group.valid && rejection.valid"
+						class="btn btn-sm btn-outline-{{ rejection.controls?.comentario.disabled ? 'danger' : 'success'}}">
+						{{ rejection.valid ? "Guardar" : "Actualizar" }}
+					</button>
+				</ng-container>
+			</div>
+		</div>
+	</div>
+</div>
+
+<datalist id="planningdatabyorderid">
+	<option *ngFor="let p of planning" [value]="p.loadorderid">{{p.loadorderid}}</option>
+</datalist>
+
+<datalist id="planningdatabyloadid">
+	<option *ngFor="let p of planningdatabyloadid()" [value]="p">{{p}}</option>
+</datalist>
+<datalist id="deliverdatabyloadid">
+	<option *ngFor="let p of deliverdatabyloadid()" [value]="p.deliveryid">{{p.deliveryid}}</option>
+</datalist>
+<datalist id="invoicedatabydeliveryid">
+	<option *ngFor="let p of invoicedatabydeliveryid()" [value]="p.invoiceid">{{p.invoiceid}}</option>
+</datalist>
+<datalist id="refnumberdatabyinvoiceid">
+	<option *ngFor="let p of refnumberdatabyinvoiceid()" [value]="p.productcode">{{p.productcode}}</option>
+</datalist>

@@ -22,5 +22,5 @@ DBMS.audit(function($, data, code) {
 		model.data = JSON.stringify(data);   // Data serialized to JSON
 	}
 
-	this.insert('tbl_log', model).nobind();  // .nobind() means that the result won't be added to response object
+	this.insert('integraciones.tbl_log', model).nobind();  // .nobind() means that the result won't be added to response object
 });

@@ -1,0 +1,181 @@
+<div class="row" [formGroup]="group">
+	<div class="col-12 p-2 mb-auto " formArrayName="plannings">
+		<ngb-accordion #acc="ngbAccordion" [closeOthers]="true">
+			<ngb-panel [id]="'toggle-'+planning[p]?.loadid" class="card"
+				*ngFor="let plan of plannings.controls; let p = index">
+				<ng-template ngbPanelHeader>
+					<div class="row">
+						<div class="col-9" (click)="acc.toggle('toggle-'+planning[p]?.loadid)">
+							# <b>{{planning[p]?.loadid}}</b>
+							<span class="ml-2 badge badge-success text-white">{{planning[p]?.vehicletype}}</span>&nbsp;
+							<label class="badge badge-warning">{{planning[p]?.reg_status}}</label>
+						</div>
+						<div class="col-auto d-flex flex-row-reverse card-actions">
+							<button (click)="acc.toggle('toggle-'+planning[p]?.loadid)"
+								class="btn btn-sm btn-outline-primary ml-2">{{acc.isExpanded('toggle-'+planning[p]?.loadid)
+								? '🔼':'🔽' }}</button>
+							<button type="button" class="btn btn-sm btn-outline-secondary ml-2"
+								(click)="disabled = !disabled">
+								{{ disabled ? '✅' : '❌' }}</button>
+							<button type="button" class="btn btn-sm btn-outline-secondary ml-2"
+								(click)="disabled = !disabled">
+								❔</button>
+							<button ngbPanelToggle class="btn btn-sm btn-outline-primary ml-2">✏️</button>
+							<button ngbPanelToggle class="btn btn-sm btn-outline-primary ml-2"
+								(click)="save(planning[p],p)">💾
+							</button>
+						</div>
+					</div>
+				</ng-template>
+				<ng-template ngbPanelContent>
+					<h5 class="card-title"> Detalle de la planilla: </h5>
+					<div class="row">
+						<p class="col-12 col-sm-4">{{planning[p]?.totalpiecessum|number}}
+							Piezas </p>
+						<p class="col-12 col-sm-4">{{planning[p]?.totalvolumesum|number}}
+							Volumen </p>
+						<p class="col-12 col-sm-4">{{planning[p]?.totalweightsum|number}}
+							Peso </p>
+					</div>
+					<h5 class="sub-title">Información del vehículo:</h5>
+					<div class="row mobile-inputs" [formGroup]="plan">
+						<div class="col">
+							<div class="form-group row">
+								<div class="col-sm-12 col-md-6">
+									<label class="col-form-label">Planilla Id:</label>
+								</div>
+								<div class="col-sm-12 col-md-6">
+									<input type="text" class="form-control form-control-primary"
+										placeholder="Planilla Id." formControlName="loadorderid">
+								</div>
+							</div>
+							<div class="form-group row">
+								<div class="col-sm-12 col-md-6">
+									<label class="col-form-label">Placa del vehiculo:</label>
+								</div>
+								<div class="col-sm-12 col-md-6">
+									<input type="text" class="form-control form-control-default"
+										placeholder="Placa del vehiculo" formControlName="licenseplate">
+								</div>
+							</div>
+						</div>
+						<div class="col">
+							<div class="form-group row">
+								<div class="col-sm-12 col-md-6">
+									<label class="col-form-label">Identificación del conductor:</label>
+								</div>
+								<div class="col-sm-12 col-md-6">
+									<input type="text" class="form-control form-control-info"
+										placeholder="Identificación del conductor" formControlName="drivercc">
+								</div>
+							</div>
+							<div class="form-group row">
+								<div class="col-sm-12 col-md-6">
+									<label class="col-form-label">Nombre del conductor:</label>
+								</div>
+								<div class="col-sm-12 col-md-6">
+									<input type="text" class="form-control form-control-success"
+										placeholder="Nombre del conductor" formControlName="drivername">
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<h5 class="card-title"> Detalle del pedido: </h5>
+					<div class="card-block table-border-style">
+						<div class="table-responsive">
+							<table class="table">
+								<thead>
+									<tr>
+										<th>#</th>
+										<th>Tipo</th>
+										<th># Pedido</th>
+										<th>Destino</th>
+										<th>Dirección entrega</th>
+										<th>Tiempo estimado llegada</th>
+										<th>Piezas</th>
+										<th>Peso</th>
+										<th>Volumen</th>
+										<th></th>
+									</tr>
+								</thead>
+								<tbody *ngFor="let deliver of planning[p]?.delivery; let i = index">
+									<tr>
+
+										<td>{{i+1}}</td>
+										<td> {{deliver.sequencenumber}}</td>
+										<td>{{deliver.deliveryid}}</td>
+										<td style="width: 20%" class="text-wrap">{{deliver?.destinationname}}</td>
+										<td style="width: 20%">{{deliver.destinationaddress}}</td>
+										<td style="width: 20%">{{deliver.arrivaldatetime| date: 'medium'}}</td>
+										<td>{{deliver.pieces|number}}</td>
+										<td>{{deliver.volume|number}}</td>
+										<td>{{deliver.weight|number}}</td>
+										<td>
+											<button (click)="deliver.inView = deliver?.inView ? 0 : 1; "
+												class="btn btn-sm btn-outline-primary ml-2">{{deliver.inView
+												? '🔼':'🔽' }}</button>
+											<button type="button" class="btn btn-sm btn-outline-danger ml-2"
+												(click)="a?.collapseAll()">⏰</button>
+										</td>
+									</tr>
+									<tr *ngIf="deliver?.inView">
+										<td colspan="12" class="m-2 p-2">
+											<div [id]="'invoice-'+invoice.invoiceid"
+												*ngFor="let invoice of deliver.invoice; let v = index">
+												<div class="d-flex align-items-center justify-content-between">
+													<div>
+
+														<span>{{v+1}}. Factura #</span>
+														<label
+															class="ml-2 badge badge-warning text-white">{{invoice.invoiceid}}</label>&nbsp;
+													</div>
+												</div>
+												<div class="table-responsive">
+													<table class="table stylish-table">
+														<thead>
+															<tr>
+																<th>#</th>
+																<th style="width: 20%">Código</th>
+																<th style="width: 20%">EAN</th>
+																<th>Cantidad
+																</th>
+																<th>Unidad</th>
+																<th>Total COP
+																</th>
+															</tr>
+														</thead>
+														<tbody>
+															<tr *ngFor="let product of invoice.product; let i = index;">
+																<th scope="row">
+																	{{i+1}}
+																</th>
+																<td>{{product?.productcode}}
+																</td>
+																<td>{{product.ean}}
+																</td>
+																<td>{{product.quantity|number}}
+																</td>
+																<td>{{product.salesunit}}
+																</td>
+																<td>{{product.costo|currency}}
+																</td>
+															</tr>
+														</tbody>
+													</table>
+												</div>
+											</div>
+										</td>
+									</tr>
+								</tbody>
+
+							</table>
+						</div>
+					</div>
+				</ng-template>
+			</ngb-panel>
+		</ngb-accordion>
+
+	</div>
+	<p class="text-muted m-t-1 font-12">Total <b>planillas</b> {{planning?.length}}</p>
+</div>

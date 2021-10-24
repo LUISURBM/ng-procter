@@ -1,0 +1,12 @@
+INSERT INTO integraciones.tablagen(
+	reg_status, table_type, table_code, referencia, descripcion, last_update, user_update, creation_date, creation_user, dato)
+	VALUES ('', 'Unidades', '1', '', 'Libras', now(), 'postgres', now(), 'postgres', '');
+	INSERT INTO integraciones.tablagen(
+	reg_status, table_type, table_code, referencia, descripcion, last_update, user_update, creation_date, creation_user, dato)
+	VALUES ('', 'Unidades', '2', '', 'Kilogramos', now(), 'postgres', now(), 'postgres', '');
+	INSERT INTO integraciones.tablagen(
+	reg_status, table_type, table_code, referencia, descripcion, last_update, user_update, creation_date, creation_user, dato)
+	VALUES ('', 'Unidades', '3', '', 'Cajas', now(), 'postgres', now(), 'postgres', '');
+	INSERT INTO integraciones.tablagen(
+	reg_status, table_type, table_code, referencia, descripcion, last_update, user_update, creation_date, creation_user, dato)
+	VALUES ('', 'Unidades', '4', '', 'Bolsas', now(), 'postgres', now(), 'postgres', '');

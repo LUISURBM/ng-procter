@@ -10,6 +10,17 @@ exports.install = function() {
 	ROUTE('PUT     /api/planning/{id}/   *Planning --> update');
 	ROUTE('DELETE  /api/planning/{id}/   *Planning --> remove');
 
+	// Reject
+	ROUTE('GET     /api/rejects/        *Rejects --> query');
+	ROUTE('POST    /api/rejects/        *Rejects --> insert');
+
+	// Invoice
+	ROUTE('GET     /api/invoice/        *Invoice --> query');
+
+	// Tablagen
+	ROUTE('GET     /api/tablagen/        *Tablagen --> query');
+	ROUTE('GET     /api/tablagen/{id}/   *Tablagen --> read');
+
 };
 
 function index() {

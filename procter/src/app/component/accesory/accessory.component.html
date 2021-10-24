@@ -1,0 +1,120 @@
+<div class="row">
+	<div class="col">
+		<h5 class="card-title">Nuevo Accesorio</h5>
+		<h6 class="card-subtitle">Escriba la información del accesorio</h6>
+		<div class="card">
+			<div class="card-body">
+				<h5 class="sub-title">Información de la factura:</h5>
+
+				<div class="row" [formGroup]="group">
+					<div class="col-12">
+						<div class="form-group row mobile-inputs">
+							<div class="col-6 col-sm-4 col-md-3 col-lg-2">
+								<label class="col-form-label">Id. Orden:</label>
+								<div class="input-group ">
+									<input type="text" class="form-control form-control-primary" id="loadorderid"
+										placeholder="# de la orden" (change)="loadorderid()" formControlName="loadorderid"
+										list="loadorderdata" size="10" autocomplete="off" />
+									<div class="input-group-append">
+										<button type="button" class="btn btn-outline-secondary"
+											(click)="group.reset()">🗑</button>
+									</div>
+								</div>
+							</div>
+							<div class="col-6 col-sm-4 col-md-3 col-lg-2">
+								<label class="col-form-label">Id. Carga:</label>
+								<div class="input-group ">
+									<input type="text" class="form-control form-control-default"
+										placeholder="# de la carga" formControlName="loadid" list="invoicedata"
+										size="10" autocomplete="off" />
+									<div class="input-group-append">
+										<button type="button" class="btn btn-outline-secondary"
+											(click)="group.reset()">🗑</button>
+									</div>
+								</div>
+							</div>
+							<div class="col-6 col-sm-4 col-md-3 col-lg-2">
+								<label class="col-form-label">Id. Envío:</label>
+								<input type="text" class="form-control form-control-success" placeholder="# Envío"
+									formControlName="deliveryid">
+							</div>
+						</div>
+					</div>
+				</div>
+
+
+				<div *ngIf="group.valid">
+					<hr>
+					<div class="row" [formGroup]="rejection">
+						<div class="col">
+							<h5 class="sub-title">Información del accesorio:</h5>
+							<div class="row mobile-inputs">
+								<div class="col-12 col-sm-auto">
+									<label class="col-form-label">Tipo:</label>
+									<div class="ml-auto">
+										<select class="custom-select form-control form-control-success"
+											formControlName="accessorytype">
+											<option selected blankoption> -- SIN SELECCIÓN --</option>
+										</select>
+									</div>
+								</div>
+								<div class="col">
+									<label class="col-form-label">Unidad de venta:</label>
+									<input type="text" class="form-control form-control-success" placeholder="Unidad"
+										formControlName="salesunit">
+								</div>
+								<div class="col">
+									<label class="col-form-label">Cantidad:</label>
+									<input type="number" class="form-control form-control-success"
+										placeholder="Cantidad" formControlName="quantity">
+								</div>
+								<div class="col">
+									<label class="col-form-label">Fecha registro:</label>
+									<input class="form-control form-control-success" placeholder="Fecha rechazo"
+										type="datetime-local" formControlName="requestdate">
+								</div>
+								<div class="col">
+									<label class="col-form-label">Sobre costo:</label>
+									<input type="currency" class="form-control form-control-success"
+										placeholder="Sobre costo" formControlName="costoverrun">
+								</div>
+								<div class="col" [class.has-success]="reject?.controls?.comment?.valid!"
+									[class.has-danger]="reject?.controls?.comment?.invalid!">
+									<label class="col-form-label">Comentario:</label>
+									<textarea class="form-control form-control-success" rows="1"
+										formControlName="comment"></textarea>
+									<div class="form-control-feedback">
+										<div *ngIf="reject?.controls?.comment?.valid!">Thanks!</div>
+										<div *ngIf="reject?.controls?.comment?.errors!">Caracteres desponibles 8</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div *ngIf="messages && !group?.valid || !reject?.valid">
+					<pre>
+						<ngb-alert *ngFor="let message of messages" [type]="message.level" [dismissible]="message.dismissible">{{message.message}}</ngb-alert>
+					</pre>
+				</div>
+				<ng-container *ngIf="group.dirty || rejection.dirty">
+					<hr>
+					<button *ngIf="!messages && group.valid && rejection.valid"
+						class="btn btn-sm btn-outline-{{ rejection.controls.comment.disabled ? 'danger' : 'success'}}">
+						{{ rejection.valid ? "Guardar" : "Actualizar" }}
+					</button>
+					<button class="btn btn-sm btn-outline-primary" *ngIf="group.dirty || rejection.dirty"
+						(click)="group.reset();rejection.reset()">Limpiar</button>
+				</ng-container>
+			</div>
+		</div>
+	</div>
+</div>
+
+<datalist id="loadorderdata">
+	<option *ngFor="let p of invoice" [value]="p.loadorderid">{{p.loadorderid}}</option>
+</datalist>
+
+<datalist id="invoicedata">
+	<option *ngFor="let i of invoice" [value]="i.loadid">{{i.loadid}}</option>
+</datalist>

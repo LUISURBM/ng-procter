@@ -1,0 +1,26 @@
+
+image: gitpod/workspace-postgres
+
+# List the ports you want to expose and what to do when they are served. See https://www.gitpod.io/docs/config-ports/
+ports:
+  - port: 4200
+    onOpen: open-preview
+  - port: 5432
+    onOpen: ignore
+
+# List the start up tasks. You can start them in parallel in multiple terminals. See https://www.gitpod.io/docs/config-start-tasks/
+tasks:
+  - broker: |
+      cd broker
+      npm install
+    command: |
+      node index.js
+  - procter: |
+      cd procter
+      npm install
+    command: |
+      ng serve --open
+
+vscode:
+  extensions:
+    - dbaeumer.vscode-eslint
