@@ -10,15 +10,15 @@ ports:
 
 # List the start up tasks. You can start them in parallel in multiple terminals. See https://www.gitpod.io/docs/config-start-tasks/
 tasks:
-  - broker: |
+  - name: broker
       cd broker
       npm install
-    command: |
+    command:
       node index.js
-  - procter: |
+  - name: procter
       cd procter
       npm install
-    command: |
+    command:
       ng serve --open
 
 vscode:
