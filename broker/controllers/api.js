@@ -3,6 +3,9 @@ exports.install = function() {
 
 	ROUTE('GET     /', index);
 
+	// Dashboard
+	ROUTE('GET     /api/dashboard/        *Dashboard --> query');
+
 	// Planning
 	ROUTE('GET     /api/planning/        *Planning --> query');
 	ROUTE('GET     /api/planning/{id}/   *Planning --> read');

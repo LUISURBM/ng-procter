@@ -6,7 +6,8 @@ import { switchMap, take } from 'rxjs/operators';
 import { ToastService } from '../toast/toast.service';
 import { BundleService } from 'src/app/bundle.service';
 import { formatDate } from '@angular/common';
-import { DateValidator } from './date-validator';
+import { ProcterValidator } from './procter-validator';
+import { keymessage } from 'src/app/shared/validation-msg';
 
 @Component({
 	selector: 'app-reject-basic',
@@ -20,13 +21,6 @@ export class RejectComponent implements OnInit {
 	rejection: FormGroup;
 	minDate: Date = new Date();
 	maxDate: Date = new Date();
-	keymessage = {
-		rejectdate: 'Fecha de rechazo',
-		salesunit: 'Unidad de venta',
-		quantity: 'Cantidad',
-		reason: 'Tipo de rechazo',
-		comentario: 'Comentario'
-	};
 
 	constructor(private http: HttpClient, builder: FormBuilder, public toastService: ToastService, public bundleSrv: BundleService) {
 		this.minDate.setFullYear(new Date().getFullYear() - 1);
@@ -39,7 +33,7 @@ export class RejectComponent implements OnInit {
 		});
 		this.rejection = builder.group({
 			// rejecttype: new FormControl(null, [Validators.required, Validators.minLength(1), Validators.maxLength(10)]),
-			rejectdate: new FormControl(formatDate(this.maxDate, 'yyyy-MM-ddTHH:mm', 'es-Co'), [Validators.required, DateValidator.maxDateToday]),
+			rejectdate: new FormControl(formatDate(this.maxDate, 'yyyy-MM-ddTHH:mm', 'es-Co'), [Validators.required, ProcterValidator.maxDateToday]),
 			salesunit: new FormControl(null, [Validators.required]),
 			quantity: new FormControl(null, [Validators.required, Validators.minLength(1), Validators.maxLength(15)]),
 			reason: new FormControl(null, [Validators.required]),
@@ -72,9 +66,9 @@ export class RejectComponent implements OnInit {
 							debugger
 							switch (`${l}`) {
 								case 'required':
-									this.messages.push({ message: `${this.keymessage[k]} es obligatorio` }); break;
-								case 'fechas':
-									this.messages.push({ message: `${k} ${l['fechas']}` }); break;
+									this.messages.push({ message: `${keymessage[k]} es obligatorio` }); break;
+								case 'procter-validation':
+									this.messages.push({ message: `${k} ${l['procter-validation']}` }); break;
 								default: break;
 							}
 						}

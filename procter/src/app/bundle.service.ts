@@ -24,7 +24,7 @@ export class BundleService {
     return this.bundle.filter(b => b.table_type === "ReasonsReject");
   }
   get rejectUnits() {
-    return this.bundle.filter(b => b.table_type === "Unidades");
+    return this.bundle.filter(b => b.table_type === "UnidadesPedido");
   }
   get accessoryTypes() {
     return this.bundle.filter(b => b.table_type === "AccessoryTypes");

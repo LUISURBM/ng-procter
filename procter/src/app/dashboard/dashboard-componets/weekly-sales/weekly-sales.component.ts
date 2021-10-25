@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { get } from 'http';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-weekly-sales',
@@ -7,7 +9,22 @@ import { Component, OnInit } from '@angular/core';
 })
 export class WeeklySalesComponent implements OnInit {
 
-  constructor() { }
+  planning: any;
+  constructor(private http: HttpClient) {
+    http.get('http://localhost:8000/api/dashboard').subscribe({
+      next: (resp: any) => {
+        console.log(resp);
+        this.planning = resp;
+      }
+    });
+  }
+
+  get porcentajeprocesados() {
+    if (!this.planning || !this.planning.rejects || this.planning.rejects.length < 1) return 0;
+    if (!this.planning || !this.planning.invoice || this.planning.invoice.length < 1) return 0;
+    const pendientes = this.planning.rejects.filter(p => !p.loadorderid);
+    return (100 / this.planning.invoice.length) * (this.planning.rejects.length - pendientes);
+  }
 
   ngOnInit(): void {
   }
