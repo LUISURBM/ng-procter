@@ -110,10 +110,10 @@
 										[max]="maxDate" (change)="rejectdate()" type="datetime-local"
 										formControlName="rejectdate">
 								</div>
-								<div class="col" [class.has-success]="reject?.controls?.comentario?.valid!"
-									[class.has-danger]="reject?.controls?.comentario?.invalid!">
-									<label class="col-form-label">Comentario:</label>
-									<textarea class="form-control" rows="1" formControlName="comentario"></textarea>
+								<div class="col" [class.has-success]="reject?.controls?.commentario?.valid!"
+									[class.has-danger]="reject?.controls?.commentario?.invalid!">
+									<label class="col-form-label">Commentario:</label>
+									<textarea class="form-control" rows="1" formControlName="commentario"></textarea>
 								</div>
 							</div>
 						</div>
@@ -128,8 +128,8 @@
 					<hr>
 					<button class="ml-auto btn btn-sm btn-outline-primary"
 						(click)="group.reset();rejection.reset()">Limpiar</button>
-					<button *ngIf="messages?.length < 1 && group.valid && rejection.valid"
-						class="btn btn-sm btn-outline-{{ rejection.controls?.comentario.disabled ? 'danger' : 'success'}}">
+					<button *ngIf="messages?.length < 1 && group.valid && rejection.valid" (click)="save()"
+						class="btn btn-sm btn-outline-{{ rejection.controls?.commentario.disabled ? 'danger' : 'success'}}">
 						{{ rejection.valid ? "Guardar" : "Actualizar" }}
 					</button>
 				</ng-container>

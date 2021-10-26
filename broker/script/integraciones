@@ -193,7 +193,7 @@ CREATE TABLE integraciones.rejects (
     reg_status character varying(1) DEFAULT ''::character varying NOT NULL,
     loadorderid character varying(20) NOT NULL,
     loadid integer DEFAULT 0 NOT NULL,
-    inoviceid integer DEFAULT 0 NOT NULL,
+    invoiceid integer DEFAULT 0 NOT NULL,
     deliveryid integer DEFAULT 0 NOT NULL,
     rejecttype integer DEFAULT 0 NOT NULL,
     rejectdate timestamp without time zone DEFAULT '0099-01-01 00:00:00'::timestamp without time zone,
@@ -203,7 +203,11 @@ CREATE TABLE integraciones.rejects (
     reason integer DEFAULT 0 NOT NULL,
     co character varying(20),
     commentario character varying(20),
-    enviado character varying(1) DEFAULT 'N'::character varying
+    enviado character varying(1) DEFAULT 'N'::character varying,
+    creation_date timestamp without time zone NOT NULL DEFAULT (now())::timestamp without time zone,
+    creation_user character varying(20) COLLATE pg_catalog."default" NOT NULL DEFAULT ''::character varying,
+    last_update timestamp without time zone NOT NULL DEFAULT '0099-01-01 00:00:00'::timestamp without time zone,
+    user_update character varying(20) COLLATE pg_catalog."default" NOT NULL DEFAULT ''::character varying
 );
 
 
@@ -218,7 +222,7 @@ CREATE TABLE integraciones.rejects_products (
     reg_status character varying(1) DEFAULT ''::character varying NOT NULL,
     loadid integer DEFAULT 0 NOT NULL,
     loadorderid character varying(20) NOT NULL,
-    inoviceid integer DEFAULT 0 NOT NULL,
+    invoiceid integer DEFAULT 0 NOT NULL,
     referencenumber integer DEFAULT 0 NOT NULL,
     quantity numeric(15,2) DEFAULT 0.00 NOT NULL,
     salesunit character varying(20),
@@ -329,182 +333,6 @@ ALTER TABLE integraciones.tbl_log OWNER TO postgres;
 -- Data for Name: accessory; Type: TABLE DATA; Schema: integraciones; Owner: postgres
 --
 
-COPY integraciones.accessory (reg_status, loadorderid, loadid, requesteddate, customerid, delieveryid, accessorytype, costoverrun, quantity, salesunit, comentarios, enviado) FROM stdin;
-\.
-
-
---
--- TOC entry 2961 (class 0 OID 24617)
--- Dependencies: 209
--- Data for Name: fulfillment; Type: TABLE DATA; Schema: integraciones; Owner: postgres
---
-
-COPY integraciones.fulfillment (loadorderid, loadid, invoiceid, deliveryid, arrivalclient, startunload, endunload, filename) FROM stdin;
-\.
-
-
---
--- TOC entry 2956 (class 0 OID 16506)
--- Dependencies: 204
--- Data for Name: invoice; Type: TABLE DATA; Schema: integraciones; Owner: postgres
---
-
-COPY integraciones.invoice (reg_status, loadid, deliveryid, invoiceid, customerid, invoicedate, totalcost, creation_date, creation_user, last_update, user_update) FROM stdin;
-	16820281	706569732	1060638131	99999999	26/03/2021 16:00:00	12356.56	2021-10-20 19:31:09.791791	WSPROCTER	2021-10-20 19:31:09.791791	WSPROCTER
-	16820286	706569748	1060638070	99999999	26/03/2021 16:00:00	12356.56	2021-10-20 19:31:09.791791	WSPROCTER	2021-10-20 19:31:09.791791	WSPROCTER
-\.
-
-
---
--- TOC entry 2957 (class 0 OID 16521)
--- Dependencies: 205
--- Data for Name: invoice_product; Type: TABLE DATA; Schema: integraciones; Owner: postgres
---
-
-COPY integraciones.invoice_product (loadid, deliveryid, productcode, ean, description, quantity, salesunit, costo) FROM stdin;
-16820281	706569732	80314806	17500435131107	PNT SH400 CN3MM170 F&R PESPX6IT	2	CS	213819.00
-16820281	706569732	80317349	17500435134689	PTN MICEL SH 400ml&3MM 170ml HYDR EXT	1	CS	142546.00
-16820281	706569732	80320216	17500435138007	HS SH CHARCOAL 375MLX12IT	1	CS	156562.00
-16820281	706569732	80320217	17500435138014	HS SH CHARCOAL 180MLX12IT	1	CS	82515.00
-16820286	706569748	80306573	7506309878164	Minora Plus FG 1CT	100	IT	31802980.00
-16820286	706569748	80315265	17500435107720	12 PB UG Fixed & 12 PB UG3 HRDC (Mix)	50	IT	20191912.00
-\.
-
-
---
--- TOC entry 2949 (class 0 OID 16425)
--- Dependencies: 197
--- Data for Name: planning; Type: TABLE DATA; Schema: integraciones; Owner: postgres
---
-
-COPY integraciones.planning (reg_status, loadid, originlocationid, vehicletype, totalweightsum, totalvolumesum, totalpiecessum, totaldeliverycount, loadorderid, licenseplate, drivername, drivercc, creation_date, creation_user, last_update, user_update) FROM stdin;
-1	16820286	2001592704	CO02	4677.51	0.00	532.00	5.00	101010	PSP120	Luís Perez	111111111	2021-10-20 18:55:07.424389	WSPROCTER	2021-10-22 17:24:56.428	WSPROCTER
-1	16820281	2001671980	CO04	27592.09	0.00	4376.00	3.00	1	1	1	1	2021-10-20 18:55:07.424389	WSPROCTER	2021-10-22 17:55:01.225	WSPROCTER
-\.
-
-
---
--- TOC entry 2950 (class 0 OID 16440)
--- Dependencies: 198
--- Data for Name: planning_delivery; Type: TABLE DATA; Schema: integraciones; Owner: postgres
---
-
-COPY integraciones.planning_delivery (loadid, deliveryid, sequencenumber, destinationid, destinationname, destinationaddress, arrivaldatetime, weight, volume, pieces, creation_date, creation_user, last_update, user_update) FROM stdin;
-16820281	706569732	200	2002867264	SUPERTIENDAS CAÑAVERAL GORGONA	VILLAGORGON,VL,COL,COVALLE010	2021-03-09 00:01:00.000	712.21	1.68	61.00	2021-10-20 18:55:07.424389	WSPROCTER	2021-10-20 18:55:07.424389	WSPROCTER
-16820281	706569740	200	2001592704	SUPER TIENDAS CAÑAVERAL MAYORISTA C	PALMIRA,VL,COL,COVALLE010	2021-03-09 00:01:00.000	2093.46	5.01	197.00	2021-10-20 18:55:07.424389	WSPROCTER	2021-10-20 18:55:07.424389	WSPROCTER
-16820281	706569784	200	2002279668	SUPERTIENDAS CAÑAVERAL PALMITEX   PRUEBAS QA	CRA 32 # 20-27,PALMIRA,VL,COL,COVALLE010	2021-03-09 00:01:00.000	4198.15	9.74	433.00	2021-10-20 18:55:07.424389	WSPROCTER	2021-10-20 18:55:07.424389	WSPROCTER
-16820286	706569748	200	2002626785	SUPERTIENDAS CAÑAVERAL TULUA	TULUA,VL,COL,COVALLE009	2021-03-09 00:01:00.000	1568.32	3.78	178.00	2021-10-20 18:55:07.424389	WSPROCTER	2021-10-20 18:55:07.424389	WSPROCTER
-16820286	706569750	200	2002867246	SUPERTIENDAS CAÑAVERAL MERINO	BUGA,VL,COL,COVALLE009	2021-03-09 00:01:00.000	434.56	0.99	49.00	2021-10-20 18:55:07.424389	WSPROCTER	2021-10-20 18:55:07.424389	WSPROCTER
-16820286	706569786	200	2002552161	SUPERTIENDAS CAÑAVERAL S.A.	BUGA,VL,COL,COVALLE009	2021-03-09 00:01:00.000	1459.74	3.57	160.00	2021-10-20 18:55:07.424389	WSPROCTER	2021-10-20 18:55:07.424389	WSPROCTER
-16820286	706569788	200	2002937878	SUPERTIENDAS CAÑAVERAL ZARZAL	ZARZAL,VL,COL,COVALLE009	2021-03-09 00:01:00.000	759.96	1.71	86.00	2021-10-20 18:55:07.424389	WSPROCTER	2021-10-20 18:55:07.424389	WSPROCTER
-16820286	706569789	200	2002926357	SUPERTIENDAS CAÑAVERAL ROLDANILLO   PRUEBAS QA	CL 7N 8-40 LC 102,ROLDANILLO,VL,COL,COVALLE009	2021-03-09 00:01:00.000	454.93	1.08	59.00	2021-10-20 18:55:07.424389	WSPROCTER	2021-10-20 18:55:07.424389	WSPROCTER
-\.
-
-
---
--- TOC entry 2954 (class 0 OID 16481)
--- Dependencies: 202
--- Data for Name: rejects; Type: TABLE DATA; Schema: integraciones; Owner: postgres
---
-
-COPY integraciones.rejects (reg_status, loadorderid, loadid, inoviceid, deliveryid, rejecttype, rejectdate, referencenumber, salesunit, quantity, reason, co, commentario, enviado) FROM stdin;
-\.
-
-
---
--- TOC entry 2955 (class 0 OID 16496)
--- Dependencies: 203
--- Data for Name: rejects_products; Type: TABLE DATA; Schema: integraciones; Owner: postgres
---
-
-COPY integraciones.rejects_products (reg_status, loadid, loadorderid, inoviceid, referencenumber, quantity, salesunit, reason, crs, comentarios) FROM stdin;
-\.
-
-
---
--- TOC entry 2951 (class 0 OID 16454)
--- Dependencies: 199
--- Data for Name: returns; Type: TABLE DATA; Schema: integraciones; Owner: postgres
---
-
-COPY integraciones.returns (reg_status, returnid, pickupdate, commentario, creation_date, creation_user, last_update, user_update) FROM stdin;
-	90000001	2021-03-25 14:00:00	Comentario Adicional	2021-10-21 18:06:00.210955	WSPROCTER	2021-10-21 18:06:00.210955	WSPROCTER
-	90000002	2021-03-26 14:00:00	Comentario Adicional	2021-10-21 18:06:00.210955	WSPROCTER	2021-10-21 18:06:00.210955	WSPROCTER
-\.
-
-
---
--- TOC entry 2952 (class 0 OID 16466)
--- Dependencies: 200
--- Data for Name: returns_customer; Type: TABLE DATA; Schema: integraciones; Owner: postgres
---
-
-COPY integraciones.returns_customer (returnid, customerid, nombre, address, contactname, phonenumber) FROM stdin;
-90000001	2002792122	Cliente ABC	José Ma. Ochoa No. 486	John Doe	+52 (442) 228 2700
-90000002	2002792122	Cliente ABC	José Ma. Ochoa No. 486	John Doe	+52 (442) 228 2700
-\.
-
-
---
--- TOC entry 2953 (class 0 OID 16473)
--- Dependencies: 201
--- Data for Name: returns_products; Type: TABLE DATA; Schema: integraciones; Owner: postgres
---
-
-COPY integraciones.returns_products (returnid, referencenumber, description, salesunit, quantity, reviewcontent) FROM stdin;
-90000001	80808080	Nombre del Producto	CS	12	true
-90000001	90909090	Nombre del Producto	CS	16	true
-90000002	0		CS	12	false
-\.
-
-
---
--- TOC entry 2958 (class 0 OID 16531)
--- Dependencies: 206
--- Data for Name: tablagen; Type: TABLE DATA; Schema: integraciones; Owner: postgres
---
-
-COPY integraciones.tablagen (reg_status, table_type, table_code, referencia, descripcion, last_update, user_update, creation_date, creation_user, dato) FROM stdin;
-	ReasonsReject	1		Motivo 1	2021-10-20 19:31:26.578254	WSPROCTER	2021-10-20 19:31:26.578254	WSPROCTER	
-	ReasonsReject	2		Motivo 2	2021-10-20 19:31:26.578254	WSPROCTER	2021-10-20 19:31:26.578254	WSPROCTER	
-	ReasonsReject	3		Motivo 3	2021-10-20 19:31:26.578254	WSPROCTER	2021-10-20 19:31:26.578254	WSPROCTER	
-	AccessoryTypes	1		Motivo 1	2021-10-20 19:31:40.113932	WSPROCTER	2021-10-20 19:31:40.113932	WSPROCTER	
-	AccessoryTypes	2		Motivo 2	2021-10-20 19:31:40.113932	WSPROCTER	2021-10-20 19:31:40.113932	WSPROCTER	
-	AccessoryTypes	3		Motivo 3	2021-10-20 19:31:40.113932	WSPROCTER	2021-10-20 19:31:40.113932	WSPROCTER	
-	DeliveryStatuses	1		Estatus 1	2021-10-20 19:31:58.833848	WSPROCTER	2021-10-20 19:31:58.833848	WSPROCTER	
-	DeliveryStatuses	2		Estatus 2	2021-10-20 19:31:58.833848	WSPROCTER	2021-10-20 19:31:58.833848	WSPROCTER	
-	DeliveryStatuses	3		Estatus 3	2021-10-20 19:31:58.833848	WSPROCTER	2021-10-20 19:31:58.833848	WSPROCTER	
-	DeliveryReasonsOutOfTime	1		Estatus 1	2021-10-20 19:32:05.795418	WSPROCTER	2021-10-20 19:32:05.795418	WSPROCTER	
-	DeliveryReasonsOutOfTime	2		Estatus 2	2021-10-20 19:32:05.795418	WSPROCTER	2021-10-20 19:32:05.795418	WSPROCTER	
-	DeliveryReasonsOutOfTime	3		Estatus 3	2021-10-20 19:32:05.795418	WSPROCTER	2021-10-20 19:32:05.795418	WSPROCTER	
-	PickUpReasonsOutOfTime	1		Motivo 1	2021-10-20 19:32:12.425896	WSPROCTER	2021-10-20 19:32:12.425896	WSPROCTER	
-	PickUpReasonsOutOfTime	2		Motivo 2	2021-10-20 19:32:12.425896	WSPROCTER	2021-10-20 19:32:12.425896	WSPROCTER	
-	PickUpReasonsOutOfTime	3		Motivo 3	2021-10-20 19:32:12.425896	WSPROCTER	2021-10-20 19:32:12.425896	WSPROCTER	
-	UnidadesPedido	1		Kg	2021-10-24 13:53:55.270122	postgres	2021-10-24 13:53:55.270122	postgres	
-	UnidadesPedido	3		Cajas	2021-10-24 13:54:45.037385	postgres	2021-10-24 13:54:45.037385	postgres	
-	UnidadesPedido	4		Bolsas	2021-10-24 13:56:28.53868	postgres	2021-10-24 13:56:28.53868	postgres	
-\.
-
-
---
--- TOC entry 2959 (class 0 OID 24585)
--- Dependencies: 207
--- Data for Name: tbl_log; Type: TABLE DATA; Schema: integraciones; Owner: postgres
---
-
-COPY integraciones.tbl_log (userid, "user", code, ua, ip, dtcreated, data, schema) FROM stdin;
-\N	\N	\N	Windows Chrome	127.0.0.1	2021-10-22	{"drivername":"1","totalvolumesum":0,"last_update":"2021-10-22T18:45:05.399Z"}	Planning.update
-\N	\N	\N	Windows Chrome	127.0.0.1	2021-10-22	{"drivername":"1","totalvolumesum":0,"last_update":"2021-10-22T18:46:01.372Z"}	Planning.update
-\N	\N	\N	Windows Chrome	127.0.0.1	2021-10-22	{"drivername":"1","totalvolumesum":0,"last_update":"2021-10-22T18:47:05.842Z"}	Planning.update
-\N	\N	\N	Windows Chrome	127.0.0.1	2021-10-22	{"drivername":"1","totalvolumesum":0,"last_update":"2021-10-22T18:48:20.565Z"}	Planning.update
-\N	\N	\N	Windows Chrome	127.0.0.1	2021-10-22	{"drivername":"1","totalvolumesum":0,"last_update":"2021-10-22T18:57:09.449Z"}	Planning.update
-\N	\N	\N	Windows Chrome	127.0.0.1	2021-10-22	{"loadid":16820286,"drivername":"11","loadorderid":"11","licenseplate":"11","drivercc":"11","last_update":"2021-10-22T19:09:13.160Z"}	Planning.update
-\N	\N	\N	Windows Chrome	127.0.0.1	2021-10-22	{"loadid":16820281,"drivername":"1","loadorderid":"1","licenseplate":"1","drivercc":"1","last_update":"2021-10-22T19:40:45.697Z"}	Planning.update
-\N	\N	\N	Windows Chrome	127.0.0.1	2021-10-22	{"loadid":16820286,"drivername":"Luís Perez","loadorderid":"101010","licenseplate":"PSP120","drivercc":"111111111","last_update":"2021-10-22T22:24:56.428Z"}	Planning.update
-\N	\N	\N	Windows Chrome	127.0.0.1	2021-10-22	{"loadid":16820281,"drivername":"1","loadorderid":"1","licenseplate":"1","drivercc":"1","last_update":"2021-10-22T22:55:01.225Z"}	Planning.update
-\.
-
-
 --
 -- TOC entry 2825 (class 2606 OID 24616)
 -- Name: accessory accessory_pkey; Type: CONSTRAINT; Schema: integraciones; Owner: postgres
@@ -583,7 +411,7 @@ ALTER TABLE ONLY integraciones.rejects
 --
 
 ALTER TABLE ONLY integraciones.rejects_products
-    ADD CONSTRAINT rejects_products_pkey PRIMARY KEY (loadid, loadorderid, inoviceid, referencenumber);
+    ADD CONSTRAINT rejects_products_pkey PRIMARY KEY (loadid, loadorderid, invoiceid, referencenumber);
 
 
 --

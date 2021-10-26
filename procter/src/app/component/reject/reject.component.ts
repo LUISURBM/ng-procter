@@ -37,7 +37,7 @@ export class RejectComponent implements OnInit {
 			salesunit: new FormControl(null, [Validators.required]),
 			quantity: new FormControl(null, [Validators.required, Validators.minLength(1), Validators.maxLength(15), Validators.min(1)]),
 			reason: new FormControl(null, [Validators.required]),
-			comentario: new FormControl(null),
+			commentario: new FormControl(null),
 			invoice: new FormControl(null)
 		});
 		http.get('http://localhost:8000/api/planning')
@@ -93,18 +93,9 @@ export class RejectComponent implements OnInit {
 		}
 	}
 
-	save(reject, i) {
-
-		Object.keys(this.group.controls).forEach((element: any) => {
-			Object.keys(this.group.controls[element].errors).forEach(e => {
-				this.messages = [];
-				if (this.group.controls[element].errors[e] === 'required') {
-					this.messages.push({ message: `${element} es obligatorio`, level: 'secondary', dismissible: false })
-				}
-			})
-		});
+	save() {
 		if (!this.group.valid) return;
-		this.http.put('http://localhost:8000/api/reject/' + reject.loadid, { ...reject, ...this.group.value.plannings[i], delivery: undefined }).subscribe({
+		this.http.post('http://localhost:8000/api/rejects/', { ...this.group.value,...this.rejection.value, delivery: undefined }).subscribe({
 			next: (resp: any) => {
 				this.toastService.show(resp, { classname: 'bg-danger text-light', delay: 15000 });
 			}

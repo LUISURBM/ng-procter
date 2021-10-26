@@ -1,6 +1,13 @@
 NEWSCHEMA('Rejects', function (schema) {
 
 	schema.define('loadid', Number);
+	schema.define('rejectdate', 'Date', true);
+	schema.define('quantity', Number);
+	schema.define('reason', Number);
+	schema.define('loadorderid', 'String', true);
+	schema.define('deliveryid', Number, true);
+	schema.define('invoiceid', Number, true);
+	schema.define('commentario', 'String', true);
 
 	schema.setQuery(function ($) {
 
@@ -17,43 +24,18 @@ NEWSCHEMA('Rejects', function (schema) {
 
 	});
 
-	schema.setRead(function ($) {
-
-		// Performs query
-		// 404 error will be returned if the no records won't be updated
-		DBMS().read('integraciones.rejects').loadid($.loadid).error(404).callback($.callback);
-
-	});
 
 	schema.setInsert(function ($, model) {
 
 		// Assigns additional values
-		model.loadid = UID();
 		model.last_update = new Date();
 		model.user_update = 'PROCTER';
-
+		console.log('insert reject')
+		console.log(model)
 		// Performs query
-		DBMS().insert('integraciones.rejects', model).log($, model).callback($.done(model.loadid));
+		DBMS().debug().insert('integraciones.rejects', model).log($, model).callback($.done(model.loadid));
 
 	});
 
-	schema.setUpdate(function ($, model) {
-
-		// Assigns additional values
-		model.last_update = new Date();
-
-		// Performs query
-		// 404 error will be returned if the no records won't be updated
-		console.log(model);
-		DBMS().modify('integraciones.rejects', model).where('loadid',model.loadid).log($, model).error(404).callback($.done($.loadid));
-
-	});
-
-	schema.setRemove(function ($) {
-
-		// 404 error will be returned if the no records won't be updated
-		DBMS().remove('integraciones.rejects').loadid($.loadid).log($).error(404).callback($.done($.loadid));
-
-	});
 
 });
