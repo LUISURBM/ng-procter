@@ -15,11 +15,9 @@
 								class="btn btn-sm btn-outline-primary ml-2">{{acc.isExpanded('toggle-'+planning[p]?.loadid)
 								? '🔼':'🔽' }}</button>
 							<button type="button" class="btn btn-sm btn-outline-secondary ml-2"
-								(click)="planning[p].enabled = !planning[p]?.enabled!">
-								{{ planning[p]?.enabled! ? '✅' : '❌' }}</button>
-							<button type="button" class="btn btn-sm btn-outline-secondary ml-2"
-								(click)="planning[p].enabled = !planning[p]?.enabled!">
-								❔</button>
+								 (click)="changeStatus(p)">
+								{{ planning[p]?.reg_status! === 2 ? '✅' : planning[p]?.reg_status! === 3 ? '❔' : '❌'
+								}}</button>
 							<button ngbPanelToggle class="btn btn-sm btn-outline-primary ml-2">✏️</button>
 							<button ngbPanelToggle class="btn btn-sm btn-outline-primary ml-2"
 								(click)="save(planning[p],p)">💾
@@ -29,7 +27,7 @@
 				</ng-template>
 				<ng-template ngbPanelContent>
 					<h5 class="card-title"> Detalle de la planilla: </h5>
-					<div class="row">
+				<div class="row">
 						<p class="col-12 col-sm-4">{{planning[p]?.totalpiecessum|number}}
 							Piezas </p>
 						<p class="col-12 col-sm-4">{{planning[p]?.totalvolumesum|number}}
@@ -38,7 +36,7 @@
 							Peso </p>
 					</div>
 					<h5 class="sub-title">Información del vehículo:</h5>
-					<div class="row mobile-inputs" >
+					<div class="row mobile-inputs" [formGroupName]="p">
 						<div class="col">
 							<div class="form-group row">
 								<div class="col-sm-12 col-md-6">
@@ -95,14 +93,14 @@
 								</div>
 							</div>
 						</div>
-					</div>
 
-					<div *ngIf="messages?.length > 0">
-						<pre>
-							<ngb-alert *ngFor="let message of messages" [type]="message.level" [dismissible]="message.dismissible">{{message.message}}</ngb-alert>
+						<div *ngIf="messages[p]?.length > 0" class="col-12">
+							<pre>
+							<ngb-alert *ngFor="let message of messages[p]; let im of index" [type]="message.level" [dismissible]="message.dismissible">{{message.message}}</ngb-alert>
 						</pre>
+						</div>
+						<hr>
 					</div>
-					<hr>
 
 					<h5 class="card-title"> Detalle del pedido: </h5>
 					<div class="card-block table-border-style">
@@ -135,16 +133,15 @@
 										<td>{{deliver.volume|number}}</td>
 										<td>{{deliver.weight|number}}</td>
 										<td>
-											<button (click)="deliver.inView = deliver?.inView ? 0 : 1; "
-												class="btn btn-sm btn-outline-primary ml-2">{{deliver.inView
+											<button class="btn btn-sm btn-outline-primary ml-2">{{deliver.inView
 												? '🔼':'🔽' }}</button>
 											<button type="button" class="btn btn-sm btn-outline-danger ml-2"
 												(click)="a?.collapseAll()">⏰</button>
 										</td>
 									</tr>
 									<tr *ngIf="deliver?.inView">
-										<td colspan="12" class="m-2 p-2">
-											<div [id]="'invoice-'+invoice.invoiceid"
+										<td colspan="12">
+											<div [id]="'invoice-'+invoice.invoiceid" class="m-4 mb-5 mt-0"
 												*ngFor="let invoice of deliver.invoice; let v = index">
 												<div class="d-flex align-items-center justify-content-between">
 													<div>

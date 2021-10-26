@@ -1,64 +1,68 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
-import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { FormArray, FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { NgbPanelChangeEvent } from '@ng-bootstrap/ng-bootstrap';
 import { ToastService } from '../toast/toast.service';
 import { keymessage } from 'src/app/shared/validation-msg';
 import { ProcterValidator } from '../reject/procter-validator';
+import { take } from 'rxjs/operators';
 
 @Component({
 	selector: 'app-planning-basic',
-	templateUrl: 'planning.component.html'
+	templateUrl: 'planning.component.html',
 })
 export class PlanningComponent implements OnInit {
 	planning: any[] = [];
 	group: FormGroup;
-	messages: any[];
+	messages: any[][];
 	constructor(private http: HttpClient, public builder: FormBuilder, public toastService: ToastService) {
 		this.group = builder.group({
 			plannings: builder.array([]),
 		});
-		http.get('http://localhost:8000/api/planning').subscribe({
+
+		this.http.get('http://localhost:8000/api/planning').pipe(take(1)).subscribe({
 			next: (resp: any[]) => {
 				console.log(resp);
-				resp.map(o => { return { ...o, delivery: undefined }; }).forEach(p => this.plannings.push(builder.group({ ...p, ...this.nuevoPlan })));
+				resp.map(o => { return { ...o, delivery: undefined }; }).forEach(p => this.plannings.push(this.builder.group({ ...p, ...this.nuevoPlan })));
 				this.planning = resp.map(o => { return { ...o, enabled: true, delivery: o.delivery.map(d => { return { ...d, inView: false, invoice: d.invoice.map(i => { return { ...i, inView: undefined }; }) }; }) }; });
+				// this.group.patchValue({ plannings: this.planning })
 			}
 		});
 	}
 
 	ngOnInit(): void {
-
-		this.group.valueChanges.subscribe({
+		this.plannings.valueChanges.subscribe({
 			next: (v) => {
-				if (!this.group.invalid && !this.group.touched) return;
-				this.messages = [];
-				Object.keys(this.group.controls).forEach(k => {
-					if (!this.group.controls[`${k}`].errors) return;
-					Object.keys(this.group.controls[`${k}`].errors).forEach(l => {
-						if (this.group.controls[`${k}`].touched && this.group.controls[`${k}`].errors[`${l}`]) {
+				debugger
+				this.messages = new Array<Array<any>>(this.planning.length);
+				this.plannings.controls.forEach((k: FormGroup,i: number) => {
+					this.messages[i] = [];
+					Object.keys(k.controls).forEach((l) => {
+						debugger
+						if (!k.controls[l].touched || k.controls[l].pristine || !k.controls[l].errors) return;
+						Object.keys(k.controls[l].errors).forEach(e => {
 							debugger
-							switch (`${l}`) {
+							switch (`${e}`) {
 								case 'required':
-									this.messages.push({ message: `${keymessage[k]} es obligatorio` }); break;
+									this.messages[i].push({ message: `${keymessage[l]} es obligatorio` }); break;
 								case 'procter-validation':
-									this.messages.push({ message: `${k} ${l['procter-validation']}` }); break;
+									this.messages[i].push({ message: `${keymessage[l]} ${k.controls[l].errors['procter-validation']}` }); break;
 								default: break;
 							}
-						}
-					});
+						});
+					})
 				})
 			}
 		})
 	}
 
 	get nuevoPlan() {
-		return this.builder.group({
-			loadorderid: this.builder.control(null, [Validators.required]),
-			licenseplate: this.builder.control(null, [Validators.required, ProcterValidator.placa]),
-			drivercc: this.builder.control(null, [Validators.required, ProcterValidator.cedula]),
-			drivername: this.builder.control(null, [Validators.required])
-		})
+		return {
+			loadorderid: this.builder.control(undefined, [Validators.required]),
+			licenseplate: this.builder.control(undefined, [Validators.required, ProcterValidator.placa]),
+			drivercc: this.builder.control(undefined, [Validators.required, ProcterValidator.cedula]),
+			drivername: this.builder.control(undefined, [Validators.required]),
+		}
 	}
 	get plannings() {
 		return this.group.controls.plannings as FormArray;
@@ -80,5 +84,8 @@ export class PlanningComponent implements OnInit {
 			}
 		});
 	}
-	disabled = false;
+	changeStatus(p:number){
+		const status = +this.planning[p].reg_status;
+		this.planning[p].reg_status = status === 0 || (status > 3)? 1 : (status+1);
+	}
 }

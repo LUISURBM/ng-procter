@@ -35,7 +35,7 @@ export class RejectComponent implements OnInit {
 			// rejecttype: new FormControl(null, [Validators.required, Validators.minLength(1), Validators.maxLength(10)]),
 			rejectdate: new FormControl(formatDate(this.maxDate, 'yyyy-MM-ddTHH:mm', 'es-Co'), [Validators.required, ProcterValidator.maxDateToday]),
 			salesunit: new FormControl(null, [Validators.required]),
-			quantity: new FormControl(null, [Validators.required, Validators.minLength(1), Validators.maxLength(15)]),
+			quantity: new FormControl(null, [Validators.required, Validators.minLength(1), Validators.maxLength(15), Validators.min(1)]),
 			reason: new FormControl(null, [Validators.required]),
 			comentario: new FormControl(null),
 			invoice: new FormControl(null)

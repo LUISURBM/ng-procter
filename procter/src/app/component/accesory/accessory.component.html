@@ -9,34 +9,42 @@
 				<div class="row" [formGroup]="group">
 					<div class="col-12">
 						<div class="form-group row mobile-inputs">
-							<div class="col-6 col-sm-4 col-md-3 col-lg-2">
+							<div class="col-12 col-sm-4">
 								<label class="col-form-label">Id. Orden:</label>
 								<div class="input-group ">
 									<input type="text" class="form-control form-control-primary" id="loadorderid"
-										placeholder="# de la orden" (change)="loadorderid()" formControlName="loadorderid"
-										list="loadorderdata" size="10" autocomplete="off" />
+										placeholder="# de la orden" (change)="loadorderid()"
+										formControlName="loadorderid" list="loadorderdata" size="10"
+										autocomplete="off" />
 									<div class="input-group-append">
 										<button type="button" class="btn btn-outline-secondary"
 											(click)="group.reset()">🗑</button>
 									</div>
 								</div>
 							</div>
-							<div class="col-6 col-sm-4 col-md-3 col-lg-2">
+							<div class="col-12 col-sm-4">
 								<label class="col-form-label">Id. Carga:</label>
 								<div class="input-group ">
 									<input type="text" class="form-control form-control-default"
-										placeholder="# de la carga" formControlName="loadid" list="invoicedata"
+										placeholder="# de la carga" formControlName="loadid" list="loaddata"
+										(change)="loadid()" size="10" autocomplete="off" />
+									<div class="input-group-append">
+										<button type="button" class="btn btn-outline-secondary"
+											(click)="group.reset()">🗑</button>
+									</div>
+								</div>
+							</div>
+							<div class="col-12 col-sm-4">
+								<label class="col-form-label">Id. Envío:</label>
+								<div class="input-group ">
+									<input type="text" class="form-control" placeholder="# Envío"
+										formControlName="deliveryid" list="deliverydata" (change)="deliveryid()"
 										size="10" autocomplete="off" />
 									<div class="input-group-append">
 										<button type="button" class="btn btn-outline-secondary"
 											(click)="group.reset()">🗑</button>
 									</div>
 								</div>
-							</div>
-							<div class="col-6 col-sm-4 col-md-3 col-lg-2">
-								<label class="col-form-label">Id. Envío:</label>
-								<input type="text" class="form-control form-control-success" placeholder="# Envío"
-									formControlName="deliveryid">
 							</div>
 						</div>
 					</div>
@@ -45,48 +53,47 @@
 
 				<div *ngIf="group.valid">
 					<hr>
-					<div class="row" [formGroup]="rejection">
+					<div class="row" [formGroup]="accessory">
 						<div class="col">
 							<h5 class="sub-title">Información del accesorio:</h5>
 							<div class="row mobile-inputs">
-								<div class="col-12 col-sm-auto">
+								<div class="col-6 col-sm-4">
 									<label class="col-form-label">Tipo:</label>
 									<div class="ml-auto">
-										<select class="custom-select form-control form-control-success"
-											formControlName="accessorytype">
-											<option selected blankoption> -- SIN SELECCIÓN --</option>
+										<select class="custom-select form-control" formControlName="accessorytype">
+											<option selected disabled value>-- SIN SELECCIÓN --</option>
+											<option selected blankoption *ngFor="let bundle of bundleSrv.accessoryTypes"
+												[value]="bundle.table_code">{{bundle.descripcion}}</option>
 										</select>
 									</div>
 								</div>
-								<div class="col">
-									<label class="col-form-label">Unidad de venta:</label>
-									<input type="text" class="form-control form-control-success" placeholder="Unidad"
-										formControlName="salesunit">
-								</div>
-								<div class="col">
-									<label class="col-form-label">Cantidad:</label>
-									<input type="number" class="form-control form-control-success"
-										placeholder="Cantidad" formControlName="quantity">
-								</div>
-								<div class="col">
-									<label class="col-form-label">Fecha registro:</label>
-									<input class="form-control form-control-success" placeholder="Fecha rechazo"
-										type="datetime-local" formControlName="requestdate">
-								</div>
-								<div class="col">
+								<div class="col-6 col-sm-4">
 									<label class="col-form-label">Sobre costo:</label>
-									<input type="currency" class="form-control form-control-success"
-										placeholder="Sobre costo" formControlName="costoverrun">
+									<input type="currency" class="form-control" placeholder="Sobre costo"
+										formControlName="costoverrun">
 								</div>
-								<div class="col" [class.has-success]="reject?.controls?.comment?.valid!"
-									[class.has-danger]="reject?.controls?.comment?.invalid!">
+								<div class="col-6 col-sm-4">
+									<label class="col-form-label">Unidad de venta:</label>
+									<select class="custom-select form-control" formControlName="salesunit">
+										<option selected disabled value>-- SIN SELECCIÓN --</option>
+										<option selected blankoption *ngFor="let bundle of bundleSrv.accessoryTypes"
+											[value]="bundle.table_code">{{bundle.descripcion}}</option>
+									</select>
+								</div>
+								<div class="col-6 col-sm-4">
+									<label class="col-form-label">Cantidad:</label>
+									<input type="number" class="form-control" placeholder="Cantidad"
+										formControlName="quantity">
+								</div>
+								<div class="col-4 col-sm-4">
+									<label class="col-form-label">Fecha registro:</label>
+									<input class="form-control" placeholder="Fecha rechazo" type="datetime-local"
+										formControlName="requestdate">
+								</div>
+								<div class="col-4 col-sm-4" [class.has-success]="accessory?.controls?.comentario?.valid!"
+									[class.has-danger]="accessory?.controls?.comentario?.invalid!">
 									<label class="col-form-label">Comentario:</label>
-									<textarea class="form-control form-control-success" rows="1"
-										formControlName="comment"></textarea>
-									<div class="form-control-feedback">
-										<div *ngIf="reject?.controls?.comment?.valid!">Thanks!</div>
-										<div *ngIf="reject?.controls?.comment?.errors!">Caracteres desponibles 8</div>
-									</div>
+									<textarea class="form-control" rows="1" formControlName="comentario"></textarea>
 								</div>
 							</div>
 						</div>
@@ -97,14 +104,14 @@
 						<ngb-alert *ngFor="let message of messages" [type]="message.level" [dismissible]="message.dismissible">{{message.message}}</ngb-alert>
 					</pre>
 				</div>
-				<ng-container *ngIf="group.dirty || rejection.dirty">
+				<ng-container *ngIf="group.dirty || accessory.dirty">
 					<hr>
-					<button *ngIf="!messages && group.valid && rejection.valid"
-						class="btn btn-sm btn-outline-{{ rejection.controls.comment.disabled ? 'danger' : 'success'}}">
-						{{ rejection.valid ? "Guardar" : "Actualizar" }}
+					<button *ngIf="!messages && group.valid && accessory.valid"
+						class="btn btn-sm btn-outline-{{ accessory.controls.comment.disabled ? 'danger' : 'success'}}">
+						{{ accessory.valid ? "Guardar" : "Actualizar" }}
 					</button>
-					<button class="btn btn-sm btn-outline-primary" *ngIf="group.dirty || rejection.dirty"
-						(click)="group.reset();rejection.reset()">Limpiar</button>
+					<button class="btn btn-sm btn-outline-primary" *ngIf="group.dirty || accessory.dirty"
+						(click)="group.reset();accessory.reset()">Limpiar</button>
 				</ng-container>
 			</div>
 		</div>
@@ -112,9 +119,12 @@
 </div>
 
 <datalist id="loadorderdata">
-	<option *ngFor="let p of invoice" [value]="p.loadorderid">{{p.loadorderid}}</option>
+	<option *ngFor="let p of planning" [value]="p.loadorderid">{{p.loadorderid}}</option>
 </datalist>
 
-<datalist id="invoicedata">
-	<option *ngFor="let i of invoice" [value]="i.loadid">{{i.loadid}}</option>
+<datalist id="loaddata">
+	<option *ngFor="let p of planningdatabyloadid()" [value]="p">{{p}}</option>
+</datalist>
+<datalist id="deliverydata">
+	<option *ngFor="let p of deliverdatabyloadid()" [value]="p.deliveryid">{{p.deliveryid}}</option>
 </datalist>

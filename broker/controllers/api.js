@@ -20,6 +20,9 @@ exports.install = function() {
 	// Invoice
 	ROUTE('GET     /api/invoice/        *Invoice --> query');
 
+	// Accessory
+	ROUTE('GET     /api/accessory/        *Accessory --> query');
+
 	// Tablagen
 	ROUTE('GET     /api/tablagen/        *Tablagen --> query');
 	ROUTE('GET     /api/tablagen/{id}/   *Tablagen --> read');
