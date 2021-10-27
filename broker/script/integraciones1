@@ -49,7 +49,11 @@ CREATE TABLE integraciones.accessory (
     quantity integer DEFAULT 0 NOT NULL,
     salesunit character varying(5),
     comentarios character varying(100),
-    enviado character varying(1) DEFAULT 'N'::character varying
+    enviado character varying(1) DEFAULT 'N'::character varying,
+    creation_date timestamp without time zone DEFAULT (now())::timestamp without time zone NOT NULL,
+    creation_user character varying(20) DEFAULT ''::character varying NOT NULL,
+    last_update timestamp without time zone DEFAULT '0099-01-01 00:00:00'::timestamp without time zone NOT NULL,
+    user_update character varying(20) DEFAULT ''::character varying NOT NULL
 );
 
 
@@ -445,7 +449,9 @@ INSERT INTO integraciones.tablagen (reg_status, table_type, table_code, referenc
 INSERT INTO integraciones.tablagen (reg_status, table_type, table_code, referencia, descripcion, last_update, user_update, creation_date, creation_user, dato) VALUES ('', 'PickUpReasonsOutOfTime', '1', '', 'Motivo 1', '2021-10-26 14:00:00.378376', 'WSPROCTER', '2021-10-26 14:00:00.378376', 'WSPROCTER', '');
 INSERT INTO integraciones.tablagen (reg_status, table_type, table_code, referencia, descripcion, last_update, user_update, creation_date, creation_user, dato) VALUES ('', 'PickUpReasonsOutOfTime', '2', '', 'Motivo 2', '2021-10-26 14:00:00.378376', 'WSPROCTER', '2021-10-26 14:00:00.378376', 'WSPROCTER', '');
 INSERT INTO integraciones.tablagen (reg_status, table_type, table_code, referencia, descripcion, last_update, user_update, creation_date, creation_user, dato) VALUES ('', 'PickUpReasonsOutOfTime', '3', '', 'Motivo 3', '2021-10-26 14:00:00.378376', 'WSPROCTER', '2021-10-26 14:00:00.378376', 'WSPROCTER', '');
-
+INSERT INTO integraciones.tablagen (reg_status, table_type, table_code, referencia, descripcion, last_update, user_update, creation_date, creation_user, dato) VALUES ('', 'UnidadesPedido', '1', '', 'Kg', '2021-10-26 14:00:00.378376', 'WSPROCTER', '2021-10-26 14:00:00.378376', 'WSPROCTER', '');
+INSERT INTO integraciones.tablagen (reg_status, table_type, table_code, referencia, descripcion, last_update, user_update, creation_date, creation_user, dato) VALUES ('', 'UnidadesPedido', '2', '', 'Lb', '2021-10-26 14:00:00.378376', 'WSPROCTER', '2021-10-26 14:00:00.378376', 'WSPROCTER', '');
+INSERT INTO integraciones.tablagen (reg_status, table_type, table_code, referencia, descripcion, last_update, user_update, creation_date, creation_user, dato) VALUES ('', 'UnidadesPedido', '3', '', 'Tn', '2021-10-26 14:00:00.378376', 'WSPROCTER', '2021-10-26 14:00:00.378376', 'WSPROCTER', '');
 
 --
 -- TOC entry 2965 (class 0 OID 24919)

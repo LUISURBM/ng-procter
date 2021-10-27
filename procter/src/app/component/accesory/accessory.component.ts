@@ -6,6 +6,8 @@ import { switchMap, take } from 'rxjs/operators';
 import { ToastService } from '../toast/toast.service';
 import { keymessage } from 'src/app/shared/validation-msg';
 import { BundleService } from 'src/app/bundle.service';
+import { formatDate } from '@angular/common';
+import { ProcterValidator } from '../reject/procter-validator';
 
 @Component({
 	selector: 'app-accessory-basic',
@@ -17,6 +19,8 @@ export class AccessoryComponent implements OnInit {
 	messages: any[];
 	group: FormGroup;
 	accessory: FormGroup;
+	minDate: Date = new Date();
+	maxDate: Date = new Date();
 
 	constructor(private http: HttpClient, builder: FormBuilder, public toastService: ToastService, public bundleSrv: BundleService) {
 		this.group = builder.group({
@@ -29,9 +33,9 @@ export class AccessoryComponent implements OnInit {
 			accessorytype: new FormControl(null, Validators.required),
 			salesunit: new FormControl(null, Validators.required),
 			quantity: new FormControl(null, Validators.required),
-			requestdate: new FormControl(Date.now(), Validators.required),
+			requesteddate: new FormControl(formatDate(this.maxDate, 'yyyy-MM-ddTHH:mm', 'es-Co'), [Validators.required, ProcterValidator.maxDateToday]),
 			costoverrun: new FormControl(null, Validators.required),
-			comentario: new FormControl(null)
+			comentarios: new FormControl(null)
 		});
 
 		http.get('http://localhost:8000/api/planning')
@@ -59,28 +63,28 @@ export class AccessoryComponent implements OnInit {
 	ngOnInit(): void {
 
 
-		// this.group.valueChanges.subscribe({
-		// 	next: (v) => {
-		// 		console.log(this.group)
-		// 		if (!this.group.invalid && !this.group.touched) return;
-		// 		this.messages = [];
-		// 		Object.keys(this.group.controls).forEach(k => {
-		// 			if (!this.group.controls[`${k}`].errors) return;
-		// 			Object.keys(this.group.controls[`${k}`].errors).forEach(l => {
-		// 				if (this.group.controls[`${k}`].touched && this.group.controls[`${k}`].errors[`${l}`]) {
-		// 					debugger
-		// 					switch (`${l}`) {
-		// 						case 'required':
-		// 							this.messages.push({ message: `${keymessage[k]} es obligatorio` }); break;
-		// 						case 'procter-validation':
-		// 							this.messages.push({ message: `${k} ${l['procter-validation']}` }); break;
-		// 						default: break;
-		// 					}
-		// 				}
-		// 			});
-		// 		})
-		// 	}
-		// })
+		this.accessory.valueChanges.subscribe({
+			next: (v) => {
+				console.log(this.accessory)
+				if (!this.accessory.invalid && !this.accessory.touched) return;
+				this.messages = [];
+				Object.keys(this.accessory.controls).forEach(k => {
+					if (!this.accessory.controls[`${k}`].errors) return;
+					Object.keys(this.accessory.controls[`${k}`].errors).forEach(l => {
+						if (this.accessory.controls[`${k}`].touched && this.accessory.controls[`${k}`].errors[`${l}`]) {
+							debugger
+							switch (`${l}`) {
+								case 'required':
+									this.messages.push({ message: `${keymessage[k]} es obligatorio` }); break;
+								case 'procter-validation':
+									this.messages.push({ message: `${k} ${l['procter-validation']}` }); break;
+								default: break;
+							}
+						}
+					});
+				})
+			}
+		})
 	}
 
 	get plannings() {
@@ -96,20 +100,15 @@ export class AccessoryComponent implements OnInit {
 		}
 	}
 
-	save(reject, i) {
-
-		Object.keys(this.group.controls).forEach((element: any) => {
-			Object.keys(this.group.controls[element].errors).forEach(e => {
-				this.messages = [];
-				if (this.group.controls[element].errors[e] === 'required') {
-					this.messages.push({ message: `${element} es obligatorio`, level: 'secondary', dismissible: false })
-				}
-			})
-		});
-		if (!this.group.valid) return;
-		this.http.put('http://localhost:8000/api/reject/' + reject.loadid, { ...reject, ...this.group.value.plannings[i], delivery: undefined }).subscribe({
+	save() {
+		if (!this.accessory.valid) return;
+		this.http.post('http://localhost:8000/api/accessory/', { ...this.group.value, ...this.accessory.value }).subscribe({
 			next: (resp: any) => {
 				this.toastService.show(resp, { classname: 'bg-danger text-light', delay: 15000 });
+			},
+			error: (error: any) => {
+				error.error.forEach(e => this.toastService.show(e.error, { classname: 'bg-danger text-light', delay: 15000 }));
+
 			}
 		});
 	}
@@ -159,5 +158,11 @@ export class AccessoryComponent implements OnInit {
 	}
 	deliverdatabyloadid() {
 		return this.selectedLoadOrderId() ? this.selectedLoadOrderId().delivery : this.planning.length < 1 ? this.planning : this.planning.reduce((s, p) => s.concat(p.delivery), []);
+	}
+
+	requesteddate() {
+		if (this.group.value.requesteddate && new Date(this.group.value.requesteddate) > new Date())
+			this.group.patchValue({ requesteddate: undefined });
+
 	}
 }

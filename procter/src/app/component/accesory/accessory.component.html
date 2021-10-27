@@ -87,31 +87,34 @@
 								</div>
 								<div class="col-4 col-sm-4">
 									<label class="col-form-label">Fecha registro:</label>
-									<input class="form-control" placeholder="Fecha rechazo" type="datetime-local"
-										formControlName="requestdate">
+									<input class="form-control" placeholder="Fecha rechazo" [min]="minDate"
+									[max]="maxDate" (change)="requesteddate()" type="datetime-local"
+										formControlName="requesteddate">
 								</div>
-								<div class="col-4 col-sm-4" [class.has-success]="accessory?.controls?.comentario?.valid!"
-									[class.has-danger]="accessory?.controls?.comentario?.invalid!">
+								<div class="col-4 col-sm-4"
+									[class.has-success]="accessory?.controls?.comentarios?.valid!"
+									[class.has-danger]="accessory?.controls?.comentarios?.invalid!">
 									<label class="col-form-label">Comentario:</label>
-									<textarea class="form-control" rows="1" formControlName="comentario"></textarea>
+									<textarea class="form-control" rows="1" formControlName="comentarios"></textarea>
 								</div>
 							</div>
 						</div>
 					</div>
 				</div>
-				<div *ngIf="messages && !group?.valid || !reject?.valid">
+
+				<div *ngIf="messages?.length > 0">
 					<pre>
 						<ngb-alert *ngFor="let message of messages" [type]="message.level" [dismissible]="message.dismissible">{{message.message}}</ngb-alert>
 					</pre>
 				</div>
 				<ng-container *ngIf="group.dirty || accessory.dirty">
 					<hr>
-					<button *ngIf="!messages && group.valid && accessory.valid"
-						class="btn btn-sm btn-outline-{{ accessory.controls.comment.disabled ? 'danger' : 'success'}}">
-						{{ accessory.valid ? "Guardar" : "Actualizar" }}
-					</button>
 					<button class="btn btn-sm btn-outline-primary" *ngIf="group.dirty || accessory.dirty"
 						(click)="group.reset();accessory.reset()">Limpiar</button>
+					<button *ngIf="messages?.length < 1 && group.valid && accessory.valid" (click)="save()"
+						class="btn btn-sm btn-outline-{{ !accessory.valid ? 'danger' : 'success'}}">
+						{{ accessory.valid ? "Guardar" : "Actualizar" }}
+					</button>
 				</ng-container>
 			</div>
 		</div>
@@ -128,3 +131,4 @@
 <datalist id="deliverydata">
 	<option *ngFor="let p of deliverdatabyloadid()" [value]="p.deliveryid">{{p.deliveryid}}</option>
 </datalist>
+<app-toasts aria-live="polite" aria-atomic="true"></app-toasts>

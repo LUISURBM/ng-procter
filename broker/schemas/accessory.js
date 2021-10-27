@@ -1,5 +1,17 @@
 NEWSCHEMA('Accessory', function (schema) {
 
+	schema.define('reg_status', String);
+	schema.define('loadorderid', 'String', true);
+	schema.define('loadid', Number);
+	schema.define('requesteddate', 'Date', true);
+	schema.define('customerid', Number);
+	schema.define('delieveryid', Number);
+	schema.define('accessorytype', 'String', false);
+	schema.define('costoverrun', Number, true);
+	schema.define('quantity', Number, true);
+	schema.define('salesunit', 'String', true);
+	schema.define('comentarios', 'String', false);
+
 	schema.setQuery(async function ($) {
 
 		// Performs automatically pagination, sort and all checks
@@ -14,5 +26,16 @@ NEWSCHEMA('Accessory', function (schema) {
 
 	});
 
+	schema.setInsert(function ($, model) {
+
+		// Assigns additional values
+		model.last_update = new Date();
+		model.user_update = 'PROCTER';
+		console.log('insert accessory')
+		console.log(model)
+		// Performs query
+		DBMS().debug().insert('integraciones.accessory', model).log($, model).callback($.done(model.loadid));
+
+	});
 
 });

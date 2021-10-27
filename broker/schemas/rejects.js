@@ -7,7 +7,7 @@ NEWSCHEMA('Rejects', function (schema) {
 	schema.define('loadorderid', 'String', true);
 	schema.define('deliveryid', Number, true);
 	schema.define('invoiceid', Number, true);
-	schema.define('commentario', 'String', true);
+	schema.define('commentario', 'String', false);
 
 	schema.setQuery(function ($) {
 

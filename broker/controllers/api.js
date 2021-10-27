@@ -22,6 +22,7 @@ exports.install = function() {
 
 	// Accessory
 	ROUTE('GET     /api/accessory/        *Accessory --> query');
+	ROUTE('POST    /api/accessory/        *Accessory --> insert');
 
 	// Tablagen
 	ROUTE('GET     /api/tablagen/        *Tablagen --> query');

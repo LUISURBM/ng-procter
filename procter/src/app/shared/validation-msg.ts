@@ -2,7 +2,6 @@ export const
     keymessage = {
         rejectdate: 'Fecha de rechazo',
         salesunit: 'Unidad de venta',
-        quantity: 'Cantidad',
         reason: 'Tipo de rechazo',
         comentario: 'Comentario',
         creation_date: "Fecha creación",
@@ -22,4 +21,9 @@ export const
         totalweightsum: "Total peso",
         user_update: "Usuario actualización",
         vehicletype: "Tipo de vehículo",
+        accessorytype: "Tipo del accesorio",
+        quantity: "Cantidad del accessorio",
+        requestdate: "Fecha del pedido",
+        costoverrun: "Valor del sobre costo",
+        comentarios: "Comentarios",
     };

@@ -23,7 +23,7 @@ export class PlanningComponent implements OnInit {
 		this.http.get('http://localhost:8000/api/planning').pipe(take(1)).subscribe({
 			next: (resp: any[]) => {
 				console.log(resp);
-				resp.map(o => { return { ...o, delivery: undefined }; }).forEach(p => this.plannings.push(this.builder.group({ ...p, ...this.nuevoPlan })));
+				resp.forEach(p => this.plannings.push(this.builder.group({ ...this.addPlan(p) })));
 				this.planning = resp.map(o => { return { ...o, enabled: true, delivery: o.delivery.map(d => { return { ...d, inView: false, invoice: d.invoice.map(i => { return { ...i, inView: undefined }; }) }; }) }; });
 				// this.group.patchValue({ plannings: this.planning })
 			}
@@ -33,15 +33,13 @@ export class PlanningComponent implements OnInit {
 	ngOnInit(): void {
 		this.plannings.valueChanges.subscribe({
 			next: (v) => {
-				debugger
 				this.messages = new Array<Array<any>>(this.planning.length);
+				console.log(this.plannings.controls)
 				this.plannings.controls.forEach((k: FormGroup,i: number) => {
 					this.messages[i] = [];
 					Object.keys(k.controls).forEach((l) => {
-						debugger
 						if (!k.controls[l].touched || k.controls[l].pristine || !k.controls[l].errors) return;
 						Object.keys(k.controls[l].errors).forEach(e => {
-							debugger
 							switch (`${e}`) {
 								case 'required':
 									this.messages[i].push({ message: `${keymessage[l]} es obligatorio` }); break;
@@ -64,6 +62,15 @@ export class PlanningComponent implements OnInit {
 			drivername: this.builder.control(undefined, [Validators.required]),
 		}
 	}
+	addPlan(p:any) {
+		if(!p) return {};
+		return {
+			loadorderid: this.builder.control(p.loadorderid, [Validators.required]),
+			licenseplate: this.builder.control(p.licenseplate, [Validators.required, ProcterValidator.placa]),
+			drivercc: this.builder.control(p.drivercc, [Validators.required, ProcterValidator.cedula]),
+			drivername: this.builder.control(p.drivername, [Validators.required]),
+		}
+	}
 	get plannings() {
 		return this.group.controls.plannings as FormArray;
 	}
@@ -80,7 +87,8 @@ export class PlanningComponent implements OnInit {
 	save(plan, i) {
 		this.http.put('http://localhost:8000/api/planning/' + plan.loadid, { ...plan, ...this.group.value.plannings[i], delivery: undefined }).subscribe({
 			next: (resp: any) => {
-				this.toastService.show(resp, { classname: 'bg-danger text-light', delay: 15000 });
+				if(resp.success)
+					this.toastService.show('Guardado OK!', { classname: 'bg-success text-light', delay: 15000 });
 			}
 		});
 	}
@@ -88,4 +96,8 @@ export class PlanningComponent implements OnInit {
 		const status = +this.planning[p].reg_status;
 		this.planning[p].reg_status = status === 0 || (status > 3)? 1 : (status+1);
 	}
+	clear(control, group) {
+		(this.plannings.controls[group] as FormGroup).controls[control].reset()
+	}
+
 }

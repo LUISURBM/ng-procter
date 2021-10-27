@@ -10,24 +10,22 @@
 							<span class="ml-2 badge badge-success text-white">{{planning[p]?.vehicletype}}</span>&nbsp;
 							<label class="badge badge-warning">{{planning[p]?.reg_status}}</label>
 						</div>
-						<div class="col-auto d-flex flex-row-reverse card-actions">
-							<button (click)="acc.toggle('toggle-'+planning[p]?.loadid)"
-								class="btn btn-sm btn-outline-primary ml-2">{{acc.isExpanded('toggle-'+planning[p]?.loadid)
-								? '🔼':'🔽' }}</button>
+						<div class="col-auto d-flex card-actions">
+							<button class="btn btn-sm btn-outline-primary ml-2" *ngIf="plan.touched === true" [disabled]=" !(plan.valid === true && plan.pristine===false)" (click)="save(planning[p],p);">💾</button>
+							<button class="btn btn-sm btn-outline-primary ml-2">✏️</button>
 							<button type="button" class="btn btn-sm btn-outline-secondary ml-2"
-								 (click)="changeStatus(p)">
+								(click)="changeStatus(p)">
 								{{ planning[p]?.reg_status! === 2 ? '✅' : planning[p]?.reg_status! === 3 ? '❔' : '❌'
 								}}</button>
-							<button ngbPanelToggle class="btn btn-sm btn-outline-primary ml-2">✏️</button>
-							<button ngbPanelToggle class="btn btn-sm btn-outline-primary ml-2"
-								(click)="save(planning[p],p)">💾
-							</button>
+							<button class="btn btn-sm btn-outline-primary ml-2"ujhhhhhhhhhh
+								ngbPanelToggle>{{acc.isExpanded('toggle-'+planning[p]?.loadid)
+								? '🔼':'🔽' }}</button>
 						</div>
 					</div>
 				</ng-template>
 				<ng-template ngbPanelContent>
 					<h5 class="card-title"> Detalle de la planilla: </h5>
-				<div class="row">
+					<div class="row">
 						<p class="col-12 col-sm-4">{{planning[p]?.totalpiecessum|number}}
 							Piezas </p>
 						<p class="col-12 col-sm-4">{{planning[p]?.totalvolumesum|number}}
@@ -47,7 +45,7 @@
 										placeholder="Planilla Id." formControlName="loadorderid">
 									<div class="input-group-append">
 										<button type="button" class="btn btn-outline-secondary"
-											(click)="group.reset()">🗑</button>
+											(click)="clear('loadorderid', p)">🗑</button>
 									</div>
 								</div>
 							</div>
@@ -60,7 +58,7 @@
 										placeholder="Placa del vehiculo" formControlName="licenseplate">
 									<div class="input-group-append">
 										<button type="button" class="btn btn-outline-secondary"
-											(click)="group.reset()">🗑</button>
+											(click)="clear('licenseplate', p)">🗑</button>
 									</div>
 								</div>
 							</div>
@@ -75,7 +73,7 @@
 										placeholder="Cédula del conductor" formControlName="drivercc">
 									<div class="input-group-append">
 										<button type="button" class="btn btn-outline-secondary"
-											(click)="group.reset()">🗑</button>
+											(click)="clear('drivercc', p)">🗑</button>
 									</div>
 								</div>
 							</div>
@@ -88,7 +86,7 @@
 										placeholder="Nombre del conductor" formControlName="drivername">
 									<div class="input-group-append">
 										<button type="button" class="btn btn-outline-secondary"
-											(click)="group.reset()">🗑</button>
+											(click)="clear('drivername', p)">🗑</button>
 									</div>
 								</div>
 							</div>
@@ -199,3 +197,4 @@
 	</div>
 	<p class="text-muted m-t-1 font-12">Total <b>planillas</b> {{planning?.length}}</p>
 </div>
+<app-toasts aria-live="polite" aria-atomic="true"></app-toasts>

@@ -157,7 +157,7 @@ CREATE TABLE integraciones.rejects
     reg_status character varying(1) COLLATE pg_catalog."default" NOT NULL DEFAULT ''::character varying,
     loadorderid character varying(20) COLLATE pg_catalog."default" NOT NULL,
     loadid integer NOT NULL DEFAULT 0,
-    inoviceid integer NOT NULL DEFAULT 0,
+    invoiceid integer NOT NULL DEFAULT 0,
     deliveryid integer NOT NULL DEFAULT 0,
     rejecttype integer NOT NULL DEFAULT 0,
     rejectdate timestamp without time zone DEFAULT '0099-01-01 00:00:00'::timestamp without time zone,
@@ -191,14 +191,14 @@ CREATE TABLE integraciones.rejects_products
     reg_status character varying(1) COLLATE pg_catalog."default" NOT NULL DEFAULT ''::character varying,
     loadid integer NOT NULL DEFAULT 0,
     loadorderid character varying(20) COLLATE pg_catalog."default" NOT NULL,
-    inoviceid integer NOT NULL DEFAULT 0,
+    invoiceid integer NOT NULL DEFAULT 0,
     referencenumber integer NOT NULL DEFAULT 0,
     quantity numeric(15,2) NOT NULL DEFAULT 0.00,
     salesunit character varying(20) COLLATE pg_catalog."default",
     reason character varying(20) COLLATE pg_catalog."default",
     crs character varying(20) COLLATE pg_catalog."default",
     comentarios character varying(100) COLLATE pg_catalog."default",
-    CONSTRAINT rejects_products_pkey PRIMARY KEY (loadid, loadorderid, inoviceid, referencenumber)
+    CONSTRAINT rejects_products_pkey PRIMARY KEY (loadid, loadorderid, invoiceid, referencenumber)
 )
 
 TABLESPACE pg_default;

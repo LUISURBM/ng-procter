@@ -24,10 +24,10 @@ export class ToastComponent {
 	}
 
 	  showSuccess() {
-	    this.toastService.show('I am a success toast', { classname: 'bg-success text-light', delay: 10000 });
+	    this.toastService.show('I am a success toast', { classname: 'bg-success text-light', delay: 1000000 });
 	}
 
 	  showDanger(dangerTpl:string) {
-	    this.toastService.show(dangerTpl, { classname: 'bg-danger text-light', delay: 15000 });
+	    this.toastService.show(dangerTpl, { classname: 'bg-danger text-light', delay: 1500000 });
 	}
 }

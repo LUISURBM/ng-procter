@@ -63,7 +63,6 @@ export class RejectComponent implements OnInit {
 					if (!this.rejection.controls[`${k}`].errors) return;
 					Object.keys(this.rejection.controls[`${k}`].errors).forEach(l => {
 						if (this.rejection.controls[`${k}`].touched && this.rejection.controls[`${k}`].errors[`${l}`]) {
-							debugger
 							switch (`${l}`) {
 								case 'required':
 									this.messages.push({ message: `${keymessage[k]} es obligatorio` }); break;
@@ -95,9 +94,16 @@ export class RejectComponent implements OnInit {
 
 	save() {
 		if (!this.group.valid) return;
-		this.http.post('http://localhost:8000/api/rejects/', { ...this.group.value,...this.rejection.value, delivery: undefined }).subscribe({
+		this.http.post('http://localhost:8000/api/rejects/', { ...this.group.value, ...this.rejection.value, delivery: undefined }).subscribe({
 			next: (resp: any) => {
-				this.toastService.show(resp, { classname: 'bg-danger text-light', delay: 15000 });
+				if (resp.success)
+					this.toastService.show('Guardado OK!', { classname: 'bg-danger text-light', delay: 15000 });
+				if (!resp.success)
+					resp.forEach(e => this.toastService.show(e.error, { classname: 'bg-danger text-light', delay: 15000 }));
+			},
+			error: (error: any) => {
+				error.error.forEach(e => this.toastService.show(e.error, { classname: 'bg-danger text-light', delay: 15000 }));
+
 			}
 		});
 	}
@@ -215,6 +221,8 @@ export class RejectComponent implements OnInit {
 	}
 
 	clear(control) {
+		this.rejection.reset();
+		this.group.controls[control].reset();
 		switch (control) {
 			case 'invoiceid':
 				this.group.controls['referencenumber'].reset();
@@ -230,7 +238,6 @@ export class RejectComponent implements OnInit {
 			default:
 				break;
 		}
-		this.group.controls[control].reset();
 	}
 
 	rejectdate() {
