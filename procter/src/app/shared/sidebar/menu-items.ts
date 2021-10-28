@@ -16,6 +16,13 @@ export const ROUTES: RouteInfo[] = [
     extralink: false,
     submenu: []
   }, {
+    path: '/component/return',
+    title: 'Devolución',
+    icon: 'mdi mdi-file-restore',
+    class: '',
+    extralink: false,
+    submenu: []
+  }, {
     path: '/component/accessory',
     title: 'Accesorio',
     icon: 'mdi mdi-widgets',

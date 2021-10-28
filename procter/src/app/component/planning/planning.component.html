@@ -15,8 +15,10 @@
 							<button class="btn btn-sm btn-outline-primary ml-2">✏️</button>
 							<button type="button" class="btn btn-sm btn-outline-secondary ml-2"
 								(click)="changeStatus(p)">
-								{{ planning[p]?.reg_status! === 2 ? '✅' : planning[p]?.reg_status! === 3 ? '❔' : '❌'
-								}}</button>
+								{{ '✅'  }}</button>
+							<button type="button" class="btn btn-sm btn-outline-secondary ml-2"
+								(click)="changeStatus(p)">
+								{{ '❌' }}</button>
 							<button class="btn btn-sm btn-outline-primary ml-2"ujhhhhhhhhhh
 								ngbPanelToggle>{{acc.isExpanded('toggle-'+planning[p]?.loadid)
 								? '🔼':'🔽' }}</button>
@@ -24,7 +26,7 @@
 					</div>
 				</ng-template>
 				<ng-template ngbPanelContent>
-					<h5 class="card-title"> Detalle del transpore: </h5>
+					<h5 class="card-title"> Detalle de la planeación: </h5>
 					<div class="row">
 						<p class="col-12 col-sm-4">{{planning[p]?.totalpiecessum|number}}
 							Piezas </p>
@@ -133,8 +135,6 @@
 										<td>
 											<button class="btn btn-sm btn-outline-primary ml-2">{{deliver.inView
 												? '🔼':'🔽' }}</button>
-											<button type="button" class="btn btn-sm btn-outline-danger ml-2"
-												(click)="a?.collapseAll()">⏰</button>
 										</td>
 									</tr>
 									<tr *ngIf="deliver?.inView">
@@ -195,6 +195,6 @@
 		</ngb-accordion>
 
 	</div>
-	<p class="text-muted m-t-1 font-12">Total <b>planillas</b> {{planning?.length}}</p>
+	<p class="text-muted m-t-1 font-12">Total <b>planeaciones</b> {{planning?.length}}</p>
 </div>
 <app-toasts aria-live="polite" aria-atomic="true"></app-toasts>
