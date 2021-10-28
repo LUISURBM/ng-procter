@@ -1,3 +1,4 @@
 /index.js.json
 /tmp/
 node_modules
+*package-lock.json

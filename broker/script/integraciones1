@@ -370,8 +370,8 @@ INSERT INTO integraciones.invoice_product (loadid, deliveryid, productcode, ean,
 -- Data for Name: planning; Type: TABLE DATA; Schema: integraciones; Owner: postgres
 --
 
-INSERT INTO integraciones.planning (reg_status, loadid, originlocationid, vehicletype, totalweightsum, totalvolumesum, totalpiecessum, totaldeliverycount, loadorderid, licenseplate, drivername, drivercc, creation_date, creation_user, last_update, user_update) VALUES ('1', 16820281, '2001671980', 'CO04', 27592.09, 71.21, 4376.00, 3.00, NULL, NULL, NULL, NULL, '2021-10-26 13:59:09.031495', 'WSPROCTER', '2021-10-26 13:59:09.031495', 'WSPROCTER');
-INSERT INTO integraciones.planning (reg_status, loadid, originlocationid, vehicletype, totalweightsum, totalvolumesum, totalpiecessum, totaldeliverycount, loadorderid, licenseplate, drivername, drivercc, creation_date, creation_user, last_update, user_update) VALUES ('1', 16820286, '2001592704', 'CO02', 4677.51, 11.14, 532.00, 5.00, NULL, NULL, NULL, NULL, '2021-10-26 13:59:09.031495', 'WSPROCTER', '2021-10-26 13:59:09.031495', 'WSPROCTER');
+INSERT INTO integraciones.planning (reg_status, loadid, originlocationid, vehicletype, totalweightsum, totalvolumesum, totalpiecessum, totaldeliverycount, loadorderid, licenseplate, drivername, drivercc, creation_date, creation_user, last_update, user_update) VALUES ('1', 16820281, '2001671980', 'CO04', 27592.09, 71.21, 4376.00, 3.00, '1234567', NULL, NULL, NULL, '2021-10-26 13:59:09.031495', 'WSPROCTER', '2021-10-26 13:59:09.031495', 'WSPROCTER');
+INSERT INTO integraciones.planning (reg_status, loadid, originlocationid, vehicletype, totalweightsum, totalvolumesum, totalpiecessum, totaldeliverycount, loadorderid, licenseplate, drivername, drivercc, creation_date, creation_user, last_update, user_update) VALUES ('1', 16820286, '2001592704', 'CO02', 4677.51, 11.14, 532.00, 5.00, '2345678', NULL, NULL, NULL, '2021-10-26 13:59:09.031495', 'WSPROCTER', '2021-10-26 13:59:09.031495', 'WSPROCTER');
 
 
 --
