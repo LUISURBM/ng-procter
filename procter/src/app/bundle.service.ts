@@ -29,4 +29,7 @@ export class BundleService {
   get accessoryTypes() {
     return this.bundle.filter(b => b.table_type === "AccessoryTypes");
   }
+  get returnTypes() {
+    return this.bundle.filter(b => b.table_type === "ReturnTypes");
+  }
 }

@@ -319,6 +319,16 @@ ALTER TABLE integraciones.tbl_log OWNER TO postgres;
 -- Dependencies: 197
 -- Data for Name: accessory; Type: TABLE DATA; Schema: integraciones; Owner: postgres
 --
+CREATE TABLE integraciones.usuarios (
+    userid character varying(200),
+    "user" SERIAL PRIMARY KEY,
+    correo character varying(200),
+    imagen character varying(200),
+    sexo character varying(200)
+);
+
+
+ALTER TABLE integraciones.usarios OWNER TO postgres;
 
 
 
@@ -434,9 +444,13 @@ INSERT INTO integraciones.returns_products (returnid, referencenumber, descripti
 -- Data for Name: tablagen; Type: TABLE DATA; Schema: integraciones; Owner: postgres
 --
 
-INSERT INTO integraciones.tablagen (reg_status, table_type, table_code, referencia, descripcion, last_update, user_update, creation_date, creation_user, dato) VALUES ('', 'ReasonsReject', '1', '', 'Motivo 1', '2021-10-26 13:59:35.407138', 'WSPROCTER', '2021-10-26 13:59:35.407138', 'WSPROCTER', '');
-INSERT INTO integraciones.tablagen (reg_status, table_type, table_code, referencia, descripcion, last_update, user_update, creation_date, creation_user, dato) VALUES ('', 'ReasonsReject', '2', '', 'Motivo 2', '2021-10-26 13:59:35.407138', 'WSPROCTER', '2021-10-26 13:59:35.407138', 'WSPROCTER', '');
-INSERT INTO integraciones.tablagen (reg_status, table_type, table_code, referencia, descripcion, last_update, user_update, creation_date, creation_user, dato) VALUES ('', 'ReasonsReject', '3', '', 'Motivo 3', '2021-10-26 13:59:35.407138', 'WSPROCTER', '2021-10-26 13:59:35.407138', 'WSPROCTER', '');
+INSERT INTO integraciones.tablagen (reg_status, table_type, table_code, referencia, descripcion, last_update, user_update, creation_date, creation_user, dato) VALUES ('', 'ReturnTypes', '1', '', 'Vía cerrada', '2021-10-26 13:59:35.407138', 'WSPROCTER', '2021-10-26 13:59:35.407138', 'WSPROCTER', '');
+INSERT INTO integraciones.tablagen (reg_status, table_type, table_code, referencia, descripcion, last_update, user_update, creation_date, creation_user, dato) VALUES ('', 'ReturnTypes', '2', '', 'Sin recepción', '2021-10-26 13:59:35.407138', 'WSPROCTER', '2021-10-26 13:59:35.407138', 'WSPROCTER', '');
+INSERT INTO integraciones.tablagen (reg_status, table_type, table_code, referencia, descripcion, last_update, user_update, creation_date, creation_user, dato) VALUES ('', 'ReturnTypes', '3', '', 'Rechazada', '2021-10-26 13:59:35.407138', 'WSPROCTER', '2021-10-26 13:59:35.407138', 'WSPROCTER', '');
+INSERT INTO integraciones.tablagen (reg_status, table_type, table_code, referencia, descripcion, last_update, user_update, creation_date, creation_user, dato) VALUES ('', 'ReasonsReject', '1', '', 'Pendiente', '2021-10-26 13:59:35.407138', 'WSPROCTER', '2021-10-26 13:59:35.407138', 'WSPROCTER', '');
+INSERT INTO integraciones.tablagen (reg_status, table_type, table_code, referencia, descripcion, last_update, user_update, creation_date, creation_user, dato) VALUES ('', 'ReasonsReject', '2', '', 'Confirmada', '2021-10-26 13:59:35.407138', 'WSPROCTER', '2021-10-26 13:59:35.407138', 'WSPROCTER', '');
+INSERT INTO integraciones.tablagen (reg_status, table_type, table_code, referencia, descripcion, last_update, user_update, creation_date, creation_user, dato) VALUES ('', 'ReasonsReject', '3', '', 'Rechazada', '2021-10-26 13:59:35.407138', 'WSPROCTER', '2021-10-26 13:59:35.407138', 'WSPROCTER', '');
+INSERT INTO integraciones.tablagen (reg_status, table_type, table_code, referencia, descripcion, last_update, user_update, creation_date, creation_user, dato) VALUES ('', 'ReasonsReject', '4', '', 'Recogida', '2021-10-26 13:59:35.407138', 'WSPROCTER', '2021-10-26 13:59:35.407138', 'WSPROCTER', '');
 INSERT INTO integraciones.tablagen (reg_status, table_type, table_code, referencia, descripcion, last_update, user_update, creation_date, creation_user, dato) VALUES ('', 'AccessoryTypes', '1', '', 'Motivo 1', '2021-10-26 13:59:42.582879', 'WSPROCTER', '2021-10-26 13:59:42.582879', 'WSPROCTER', '');
 INSERT INTO integraciones.tablagen (reg_status, table_type, table_code, referencia, descripcion, last_update, user_update, creation_date, creation_user, dato) VALUES ('', 'AccessoryTypes', '2', '', 'Motivo 2', '2021-10-26 13:59:42.582879', 'WSPROCTER', '2021-10-26 13:59:42.582879', 'WSPROCTER', '');
 INSERT INTO integraciones.tablagen (reg_status, table_type, table_code, referencia, descripcion, last_update, user_update, creation_date, creation_user, dato) VALUES ('', 'AccessoryTypes', '3', '', 'Motivo 3', '2021-10-26 13:59:42.582879', 'WSPROCTER', '2021-10-26 13:59:42.582879', 'WSPROCTER', '');

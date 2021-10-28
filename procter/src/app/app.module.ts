@@ -30,6 +30,8 @@ import { PERFECT_SCROLLBAR_CONFIG } from 'ngx-perfect-scrollbar';
 import { PerfectScrollbarConfigInterface } from 'ngx-perfect-scrollbar';
 import { ThemeService } from 'ng2-charts';
 import localeEsCo from '@angular/common/locales/es-CO';
+import { LoginComponent } from './component/login/login.component';
+import { AuthGuardService } from './component/login/auth-guard';
 registerLocaleData(localeEsCo);
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
@@ -46,7 +48,8 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
 		FullComponent,
 		NavigationComponent,
 		SidebarComponent,
-		BreadcrumbComponent
+		BreadcrumbComponent,
+		LoginComponent
 	],
 	imports: [
 		CommonModule,
@@ -69,7 +72,8 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
 			provide: PERFECT_SCROLLBAR_CONFIG,
 			useValue: DEFAULT_PERFECT_SCROLLBAR_CONFIG
 		},
-		ThemeService
+		ThemeService,
+		AuthGuardService
 	],
 	bootstrap: [AppComponent]
 })

@@ -1,0 +1,96 @@
+<div class="row">
+	<div class="col">
+		<h5 class="card-title">Nueva Devolución</h5>
+		<h6 class="card-subtitle">Escriba la información de la devolución</h6>
+		<div class="card">
+			<div class="card-body">
+				<h5 class="sub-title">Información de la planilla:</h5>
+
+				<div class="row" [formGroup]="group">
+					<div class="col-12">
+						<div class="form-group row mobile-inputs">
+							<div class="col-12 col-sm-6 col-md-4 col-lg-4 col-xl-2 col-xl-offset-1">
+								<label class="col-form-label">Id. Orden:</label>
+								<div class="input-group ">
+									<input type="text" class="form-control form-control-primary" id="loadorderid"
+										placeholder="# de la orden" (change)="loadorderid()"
+										formControlName="loadorderid" list="planningdatabyorderid" size="10"
+										autocomplete="off" />
+									<div class="input-group-append">
+										<button type="button" class="btn btn-outline-secondary"
+											(click)="group.reset()">🗑</button>
+									</div>
+								</div>
+							</div>
+							<div class="col-12 col-sm-4">
+								<label class="col-form-label">Estado:</label>
+								<div class="ml-auto">
+									<select class="custom-select form-control" formControlName="reg_status">
+										<option selected disabled value>-- SIN SELECCIÓN --</option>
+										<option selected blankoption *ngFor="let bundle of bundleSrv.returnTypes"
+											[value]="bundle.table_code">{{bundle.descripcion}}</option>
+									</select>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+
+				<div *ngIf="group.valid">
+					<hr>
+					<div class="row" [formGroup]="returned">
+						<div class="col">
+							<h5 class="sub-title">Información del pedido:</h5>
+							<div class="row mobile-inputs">
+								<div class="col col-lg-4">
+									<label class="col-form-label">Fecha recodiga:</label>
+									<input class="form-control" placeholder="Fecha rechazo" [min]="minDate"
+										[max]="maxDate" (change)="pickupdate()" type="datetime-local"
+										formControlName="pickupdate">
+								</div>
+								<div class="col" [class.has-success]="returned?.controls?.commentario?.valid!"
+									[class.has-danger]="returned?.controls?.commentario?.invalid!">
+									<label class="col-form-label">Commentario:</label>
+									<textarea class="form-control" rows="1" formControlName="commentario"></textarea>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div *ngIf="messages?.length > 0">
+					<pre>
+						<ngb-alert *ngFor="let message of messages" [type]="message.level" [dismissible]="message.dismissible">{{message.message}}</ngb-alert>
+					</pre>
+				</div>
+				<ng-container *ngIf="group.dirty">
+					<hr>
+					<button class="ml-auto btn btn-sm btn-outline-primary"
+						(click)="group.reset();returned.reset()">Limpiar</button>
+					<button *ngIf="messages?.length < 1 && group.valid && returned.valid" (click)="save()"
+						class="btn btn-sm btn-outline-{{ returned.controls?.commentario.disabled ? 'danger' : 'success'}}">
+						{{ returned.valid ? "Guardar" : "Actualizar" }}
+					</button>
+				</ng-container>
+			</div>
+		</div>
+	</div>
+</div>
+
+<datalist id="planningdatabyorderid">
+	<option *ngFor="let p of planning" [value]="p.loadorderid">{{p.loadorderid}}</option>
+</datalist>
+
+<datalist id="planningdatabyloadid">
+	<option *ngFor="let p of planningdatabyloadid()" [value]="p">{{p}}</option>
+</datalist>
+<datalist id="deliverdatabyloadid">
+	<option *ngFor="let p of deliverdatabyloadid()" [value]="p.deliveryid">{{p.deliveryid}}</option>
+</datalist>
+<datalist id="invoicedatabydeliveryid">
+	<option *ngFor="let p of invoicedatabydeliveryid()" [value]="p.invoiceid">{{p.invoiceid}}</option>
+</datalist>
+<datalist id="refnumberdatabyinvoiceid">
+	<option *ngFor="let p of refnumberdatabyinvoiceid()" [value]="p.productcode">{{p.productcode}}</option>
+</datalist>
+<app-toasts aria-live="polite" aria-atomic="true"></app-toasts>

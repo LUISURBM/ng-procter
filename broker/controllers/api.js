@@ -24,10 +24,16 @@ exports.install = function() {
 	ROUTE('GET     /api/accessory/        *Accessory --> query');
 	ROUTE('POST    /api/accessory/        *Accessory --> insert');
 
+	// Reject
+	ROUTE('GET     /api/return/        *Return --> query');
+	ROUTE('POST    /api/return/        *Return --> insert');
+
 	// Tablagen
 	ROUTE('GET     /api/tablagen/        *Tablagen --> query');
 	ROUTE('GET     /api/tablagen/{id}/   *Tablagen --> read');
 
+	// Usuarios
+	ROUTE('POST     /api/usuarios/        *Usuarios --> insert');
 };
 
 function index() {

@@ -9,7 +9,31 @@
 				<div class="row" [formGroup]="group">
 					<div class="col-12">
 						<div class="form-group row mobile-inputs">
-							<div class="col-12 col-sm-6 col-md-4 col-lg-4 col-xl-2 col-xl-offset-1">
+							<div class="col-12 col-sm-4">
+								<label class="col-form-label">Id. Factura:</label>
+								<div class="input-group ">
+									<input type="text" class="form-control form-control-info" placeholder="# Factura"
+										list="invoicedatabydeliveryid" list="invoicedatabydeliveryid"
+										(change)="invoiceid()" autocomplete="off" size="10" formControlName="invoiceid">
+									<div class="input-group-append">
+										<button type="button" class="btn btn-outline-secondary"
+											(click)="clear('invoiceid')">🗑</button>
+									</div>
+								</div>
+							</div>
+							<div class="col-12 col-sm-4">
+								<label class="col-form-label">Número de Referencia:</label>
+								<div class="input-group ">
+									<input type="text" class="form-control" list="refnumberdatabyinvoiceid"
+										list="refnumberdatabyinvoiceid" (change)="productid()" autocomplete="off"
+										size="10" placeholder="# de Referencia" formControlName="referencenumber">
+									<div class="input-group-append">
+										<button type="button" class="btn btn-outline-secondary"
+											(click)="clear('referencenumber')">🗑</button>
+									</div>
+								</div>
+							</div>
+							<div class="col-12 col-sm-4 col-lg-auto">
 								<label class="col-form-label">Id. Orden:</label>
 								<div class="input-group ">
 									<input type="text" class="form-control form-control-primary" id="loadorderid"
@@ -22,7 +46,7 @@
 									</div>
 								</div>
 							</div>
-							<div class="col-12 col-sm-6 col-md-4 col-lg-4 col-xl-2">
+							<div class="col-12 col-sm-4 col-lg-auto">
 								<label class="col-form-label">Id. Carga:</label>
 								<div class="input-group ">
 									<input type="text" class="form-control form-control-default"
@@ -34,7 +58,7 @@
 									</div>
 								</div>
 							</div>
-							<div class="col-12 col-sm-6 col-md-4 col-lg-4 col-xl-2">
+							<div class="col-12 col-sm-4 col-lg-auto">
 								<label class="col-form-label">Id. Envío:</label>
 								<div class="input-group ">
 									<input type="text" class="form-control" placeholder="# Envío"
@@ -46,30 +70,7 @@
 									</div>
 								</div>
 							</div>
-							<div class="col-12 col-sm-6 col-md-6 col-lg-4 col-xl-2">
-								<label class="col-form-label">Id. Factura:</label>
-								<div class="input-group ">
-									<input type="text" class="form-control form-control-info" placeholder="# Factura"
-										list="invoicedatabydeliveryid" list="invoicedatabydeliveryid"
-										(change)="invoiceid()" autocomplete="off" size="10" formControlName="invoiceid">
-									<div class="input-group-append">
-										<button type="button" class="btn btn-outline-secondary"
-											(click)="clear('invoiceid')">🗑</button>
-									</div>
-								</div>
-							</div>
-							<div class="col col-sm-6">
-								<label class="col-form-label">Número de Referencia:</label>
-								<div class="input-group ">
-									<input type="text" class="form-control" list="refnumberdatabyinvoiceid"
-										list="refnumberdatabyinvoiceid" (change)="productid()" autocomplete="off"
-										size="10" placeholder="# de Referencia" formControlName="referencenumber">
-									<div class="input-group-append">
-										<button type="button" class="btn btn-outline-secondary"
-											(click)="clear('referencenumber')">🗑</button>
-									</div>
-								</div>
-							</div>
+
 						</div>
 					</div>
 				</div>

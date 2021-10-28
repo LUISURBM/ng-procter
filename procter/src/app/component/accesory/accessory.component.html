@@ -10,12 +10,11 @@
 					<div class="col-12">
 						<div class="form-group row mobile-inputs">
 							<div class="col-12 col-sm-4">
-								<label class="col-form-label">Id. Orden:</label>
+								<label class="col-form-label">Id. Carga:</label>
 								<div class="input-group ">
-									<input type="text" class="form-control form-control-primary" id="loadorderid"
-										placeholder="# de la orden" (change)="loadorderid()"
-										formControlName="loadorderid" list="loadorderdata" size="10"
-										autocomplete="off" />
+									<input type="text" class="form-control form-control-default"
+										placeholder="# de la carga" formControlName="loadid" list="loaddata"
+										(change)="loadid()" size="10" autocomplete="off" />
 									<div class="input-group-append">
 										<button type="button" class="btn btn-outline-secondary"
 											(click)="group.reset()">🗑</button>
@@ -23,11 +22,12 @@
 								</div>
 							</div>
 							<div class="col-12 col-sm-4">
-								<label class="col-form-label">Id. Carga:</label>
+								<label class="col-form-label">Id. Orden:</label>
 								<div class="input-group ">
-									<input type="text" class="form-control form-control-default"
-										placeholder="# de la carga" formControlName="loadid" list="loaddata"
-										(change)="loadid()" size="10" autocomplete="off" />
+									<input type="text" class="form-control form-control-primary" id="loadorderid"
+										placeholder="# de la orden" (change)="loadorderid()"
+										formControlName="loadorderid" list="loadorderdata" size="10"
+										autocomplete="off" />
 									<div class="input-group-append">
 										<button type="button" class="btn btn-outline-secondary"
 											(click)="group.reset()">🗑</button>
@@ -68,8 +68,8 @@
 									</div>
 								</div>
 								<div class="col-6 col-sm-4">
-									<label class="col-form-label">Sobre costo:</label>
-									<input type="currency" class="form-control" placeholder="Sobre costo"
+									<label class="col-form-label">Valor del accesorio:</label>
+									<input type="currency" class="form-control" placeholder="Valor"
 										formControlName="costoverrun">
 								</div>
 								<div class="col-6 col-sm-4">
@@ -86,7 +86,7 @@
 										formControlName="quantity">
 								</div>
 								<div class="col-4 col-sm-4">
-									<label class="col-form-label">Fecha registro:</label>
+									<label class="col-form-label">Fecha del accesorio:</label>
 									<input class="form-control" placeholder="Fecha rechazo" [min]="minDate"
 									[max]="maxDate" (change)="requesteddate()" type="datetime-local"
 										formControlName="requesteddate">

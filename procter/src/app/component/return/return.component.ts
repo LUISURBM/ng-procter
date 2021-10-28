@@ -1,24 +1,24 @@
-import { formatDate } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { NgbPanelChangeEvent } from '@ng-bootstrap/ng-bootstrap';
-import { take } from 'rxjs/operators';
-import { BundleService } from 'src/app/bundle.service';
-import { keymessage } from 'src/app/shared/validation-msg';
+import { switchMap, take } from 'rxjs/operators';
 import { ToastService } from '../toast/toast.service';
-import { ProcterValidator } from './procter-validator';
+import { BundleService } from 'src/app/bundle.service';
+import { formatDate } from '@angular/common';
+import { keymessage } from 'src/app/shared/validation-msg';
+import { ProcterValidator } from '../reject/procter-validator';
 
 @Component({
-	selector: 'app-reject-basic',
-	templateUrl: 'reject.component.html'
+	selector: 'app-return-basic',
+	templateUrl: 'return.component.html'
 })
-export class RejectComponent implements OnInit {
+export class DevolucionComponent implements OnInit {
 	planning: any[] = [];
 	get planillas() { return this.planning && this.planning.length > 0 ? this.planning : []; }
 	messages: any[];
 	group: FormGroup;
-	rejection: FormGroup;
+	returned: FormGroup;
 	minDate: Date = new Date();
 	maxDate: Date = new Date();
 
@@ -26,19 +26,13 @@ export class RejectComponent implements OnInit {
 		this.minDate.setFullYear(new Date().getFullYear() - 1);
 		this.group = builder.group({
 			loadorderid: new FormControl(null, [Validators.required, Validators.minLength(1), Validators.maxLength(10)]),
-			loadid: new FormControl(null, [Validators.required, Validators.minLength(1), Validators.maxLength(10)]),
-			invoiceid: new FormControl(null, [Validators.required, Validators.minLength(1), Validators.maxLength(10)]),
-			deliveryid: new FormControl(null, [Validators.required, Validators.minLength(1), Validators.maxLength(10)]),
-			referencenumber: new FormControl(null, [Validators.required, Validators.minLength(1), Validators.maxLength(10)]),
+			reg_status: new FormControl(null, [Validators.required, Validators.minLength(1), Validators.maxLength(10)]),
+			
 		});
-		this.rejection = builder.group({
+		this.returned = builder.group({
 			// rejecttype: new FormControl(null, [Validators.required, Validators.minLength(1), Validators.maxLength(10)]),
-			rejectdate: new FormControl(formatDate(this.maxDate, 'yyyy-MM-ddTHH:mm', 'es-Co'), [Validators.required, ProcterValidator.maxDateToday]),
-			salesunit: new FormControl(null, [Validators.required]),
-			quantity: new FormControl(null, [Validators.required, Validators.minLength(1), Validators.maxLength(15), Validators.min(1)]),
-			reason: new FormControl(null, [Validators.required]),
+			pickupdate: new FormControl(formatDate(this.maxDate, 'yyyy-MM-ddTHH:mm', 'es-Co'), [Validators.required, ProcterValidator.maxDateToday]),
 			commentario: new FormControl(null),
-			invoice: new FormControl(null)
 		});
 		http.get('http://localhost:8000/api/planning')
 			.pipe(
@@ -54,15 +48,15 @@ export class RejectComponent implements OnInit {
 	ngOnInit(): void {
 
 
-		this.rejection.valueChanges.subscribe({
+		this.returned.valueChanges.subscribe({
 			next: (v) => {
-				console.log(this.rejection)
-				if (!this.rejection.invalid && !this.rejection.touched) return;
+				console.log(this.returned)
+				if (!this.returned.invalid && !this.returned.touched) return;
 				this.messages = [];
-				Object.keys(this.rejection.controls).forEach(k => {
-					if (!this.rejection.controls[`${k}`].errors) return;
-					Object.keys(this.rejection.controls[`${k}`].errors).forEach(l => {
-						if (this.rejection.controls[`${k}`].touched && this.rejection.controls[`${k}`].errors[`${l}`]) {
+				Object.keys(this.returned.controls).forEach(k => {
+					if (!this.returned.controls[`${k}`].errors) return;
+					Object.keys(this.returned.controls[`${k}`].errors).forEach(l => {
+						if (this.returned.controls[`${k}`].touched && this.returned.controls[`${k}`].errors[`${l}`]) {
 							switch (`${l}`) {
 								case 'required':
 									this.messages.push({ message: `${keymessage[k]} es obligatorio` }); break;
@@ -77,7 +71,7 @@ export class RejectComponent implements OnInit {
 		})
 	}
 	get controls() {
-		return this.rejection.controls;
+		return this.returned.controls;
 	}
 	get plannings() {
 		return this.group.controls.plannings as FormArray;
@@ -94,7 +88,7 @@ export class RejectComponent implements OnInit {
 
 	save() {
 		if (!this.group.valid) return;
-		this.http.post('http://localhost:8000/api/rejects/', { ...this.group.value, ...this.rejection.value, delivery: undefined }).subscribe({
+		this.http.post('http://localhost:8000/api/return/', { ...this.group.value, ...this.returned.value, loadorderid: undefined }).subscribe({
 			next: (resp: any) => {
 				if (resp.success)
 					this.toastService.show('Guardado OK!', { classname: 'bg-danger text-light', delay: 15000 });
@@ -221,7 +215,7 @@ export class RejectComponent implements OnInit {
 	}
 
 	clear(control) {
-		this.rejection.reset();
+		this.returned.reset();
 		this.group.controls[control].reset();
 		switch (control) {
 			case 'invoiceid':
@@ -240,9 +234,9 @@ export class RejectComponent implements OnInit {
 		}
 	}
 
-	rejectdate() {
-		if (this.group.value.rejectdate && new Date(this.group.value.rejectdate) > new Date())
-			this.group.patchValue({ rejectdate: undefined });
+	pickupdate() {
+		if (this.group.value.pickupdate && new Date(this.group.value.pickupdate) > new Date())
+			this.group.patchValue({ pickupdate: undefined });
 
 	}
 }

@@ -19,6 +19,8 @@ import { ToastComponent } from './toast/toast.component';
 import { PlanningComponent } from './planning/planning.component';
 import { RejectComponent } from './reject/reject.component';
 import { AccessoryComponent } from './accesory/accessory.component';
+import { DevolucionComponent } from './return/return.component';
+import { LoginComponent } from './login/login.component';
 
 export const ComponentsRoutes: Routes = [
 
@@ -26,13 +28,19 @@ export const ComponentsRoutes: Routes = [
 		path: 'planning',
 		component: PlanningComponent,
 		data: {
-			title: 'Planilla'
+			title: 'Planeación'
 		}
 	}, {
 		path: 'reject',
 		component: RejectComponent,
 		data: {
 			title: 'Rechazo'
+		}
+	}, {
+		path: 'return',
+		component: DevolucionComponent,
+		data: {
+			title: 'Devolución'
 		}
 	}, {
 		path: 'accessory',
