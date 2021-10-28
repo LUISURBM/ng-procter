@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
 
+import { environment } from 'src/environments/environment';
 @Component({
   selector: 'app-daily-sales',
   templateUrl: './daily-sales.component.html',
@@ -9,7 +10,7 @@ import { Component } from '@angular/core';
 export class DailySalesComponent {
   planning: any;
   constructor(private http: HttpClient) {
-    http.get('http://localhost:8000/api/dashboard').subscribe({
+    http.get(environment.procter_api+'api/dashboard').subscribe({
       next: (resp: any) => {
         console.log(resp);
         this.planning = resp;

@@ -6,6 +6,7 @@ import { ToastService } from '../toast/toast.service';
 import { keymessage } from 'src/app/shared/validation-msg';
 import { ProcterValidator } from '../reject/procter-validator';
 import { take } from 'rxjs/operators';
+import { environment } from 'src/environments/environment';
 
 @Component({
 	selector: 'app-planning-basic',
@@ -20,7 +21,7 @@ export class PlanningComponent implements OnInit {
 			plannings: builder.array([]),
 		});
 
-		this.http.get('http://localhost:8000/api/planning').pipe(take(1)).subscribe({
+		this.http.get(environment.procter_api+'api/planning').pipe(take(1)).subscribe({
 			next: (resp: any[]) => {
 				console.log(resp);
 				resp.forEach(p => this.plannings.push(this.builder.group({ ...this.addPlan(p) })));
@@ -85,7 +86,7 @@ export class PlanningComponent implements OnInit {
 	}
 
 	save(plan, i) {
-		this.http.put('http://localhost:8000/api/planning/' + plan.loadid, { ...plan, ...this.group.value.plannings[i], delivery: undefined }).subscribe({
+		this.http.put(environment.procter_api+'api/planning/' + plan.loadid, { ...plan, ...this.group.value.plannings[i], delivery: undefined }).subscribe({
 			next: (resp: any) => {
 				if(resp.success)
 					this.toastService.show('Guardado OK!', { classname: 'bg-success text-light', delay: 15000 });

@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { take } from 'rxjs/operators';
 
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -9,7 +10,7 @@ import { take } from 'rxjs/operators';
 export class BundleService {
   bundle: any[];
   constructor(private http: HttpClient) {
-    this.http.get('http://localhost:8000/api/tablagen')
+    this.http.get(environment.procter_api+'api/tablagen')
       .pipe(
         take(1)
       )

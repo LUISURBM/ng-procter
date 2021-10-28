@@ -8,6 +8,7 @@ import { keymessage } from 'src/app/shared/validation-msg';
 import { BundleService } from 'src/app/bundle.service';
 import { formatDate } from '@angular/common';
 import { ProcterValidator } from '../reject/procter-validator';
+import { environment } from 'src/environments/environment';
 
 @Component({
 	selector: 'app-accessory-basic',
@@ -38,7 +39,7 @@ export class AccessoryComponent implements OnInit {
 			comentarios: new FormControl(null)
 		});
 
-		http.get('http://localhost:8000/api/planning')
+		http.get(environment.procter_api+'api/planning')
 			.pipe(
 				take(1)
 			)
@@ -48,7 +49,7 @@ export class AccessoryComponent implements OnInit {
 				}
 			});
 
-		http.get('http://localhost:8000/api/accessory')
+		http.get(environment.procter_api+'api/accessory')
 			.pipe(
 				take(1)
 			)
@@ -102,7 +103,7 @@ export class AccessoryComponent implements OnInit {
 
 	save() {
 		if (!this.accessory.valid) return;
-		this.http.post('http://localhost:8000/api/accessory/', { ...this.group.value, ...this.accessory.value }).subscribe({
+		this.http.post(environment.procter_api+'api/accessory/', { ...this.group.value, ...this.accessory.value }).subscribe({
 			next: (resp: any) => {
 				this.toastService.show(resp, { classname: 'bg-danger text-light', delay: 15000 });
 			},
