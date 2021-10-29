@@ -9,6 +9,7 @@ import { keymessage } from 'src/app/shared/validation-msg';
 import { ToastService } from '../toast/toast.service';
 import { ProcterValidator } from './procter-validator';
 
+import { environment } from 'src/environments/environment';
 @Component({
 	selector: 'app-reject-basic',
 	templateUrl: 'reject.component.html'
@@ -41,7 +42,7 @@ export class RejectComponent implements OnInit {
 			commentario: new FormControl(null),
 			invoice: new FormControl(null)
 		});
-		http.get('http://localhost:8000/api/planning')
+		http.get(environment.procter_api+'api/planning')
 			.pipe(
 				take(1)
 			)
@@ -95,7 +96,7 @@ export class RejectComponent implements OnInit {
 
 	save() {
 		if (!this.group.valid) return;
-		this.http.post('http://localhost:8000/api/rejects/', { ...this.group.value, ...this.rejection.value, delivery: undefined }).subscribe({
+		this.http.post(environment.procter_api+'api/rejects/', { ...this.group.value, ...this.rejection.value, delivery: undefined }).subscribe({
 			next: (resp: any) => {
 				if (resp.success)
 					this.toastService.show('Guardado OK!', { classname: 'bg-danger text-light', delay: 15000 });
