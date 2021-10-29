@@ -25,6 +25,10 @@ import { NgbdtimepickerBasicComponent } from './timepicker/timepicker.component'
 import { ToastsContainer } from './toast/toast-container';
 import { ToastComponent } from './toast/toast.component';
 import { NgbdtypeheadBasicComponent } from './typehead/typehead.component';
+import { RejectsComponent } from './reject/rejects.component';
+import { WebdatarocksPivotModule } from 'ng-webdatarocks';
+import { ReturnsComponent } from './return/returns.component';
+import { AccessoriesComponent } from './accesory/accessories.component';
 
 
 
@@ -34,7 +38,9 @@ import { NgbdtypeheadBasicComponent } from './typehead/typehead.component';
     RouterModule.forChild(ComponentsRoutes),
     FormsModule,
     ReactiveFormsModule,
-    NgbModule
+    NgbModule,
+    
+   WebdatarocksPivotModule
   ],
   declarations: [
     NgbdpregressbarBasicComponent,
@@ -56,8 +62,11 @@ import { NgbdtypeheadBasicComponent } from './typehead/typehead.component';
     ToastsContainer,
     PlanningComponent,
     RejectComponent,
+    RejectsComponent,
     AccessoryComponent,
+    AccessoriesComponent,
     ReturnComponent,
+    ReturnsComponent
   ]
 })
 export class ComponentsModule { }

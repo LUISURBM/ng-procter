@@ -11,15 +11,19 @@
 							<label class="badge badge-warning">{{planning[p]?.reg_status}}</label>
 						</div>
 						<div class="col-auto d-flex card-actions">
-							<button class="btn btn-sm btn-outline-primary ml-2" *ngIf="plan.touched === true" [disabled]=" !(plan.valid === true && plan.pristine===false)" (click)="save(planning[p],p);">💾</button>
+							<button class="btn btn-sm btn-outline-primary ml-2"
+								[disabled]="plan.touched === true || !(plan.valid === true && plan.pristine===false)"
+								(click)="save(planning[p],p);">💾</button>
 							<button class="btn btn-sm btn-outline-primary ml-2">✏️</button>
 							<button type="button" class="btn btn-sm btn-outline-secondary ml-2"
-								(click)="changeStatus(p)">
-								{{ '✅'  }}</button>
+								[disabled]="planning[p]?.reg_status == 1"
+								(click)="aprobar(p)">
+								{{ '✅' }}</button>
 							<button type="button" class="btn btn-sm btn-outline-secondary ml-2"
-								(click)="changeStatus(p)">
+								[disabled]="planning[p]?.reg_status == 2"
+								(click)="rechazar(p)">
 								{{ '❌' }}</button>
-							<button class="btn btn-sm btn-outline-primary ml-2"ujhhhhhhhhhh
+							<button class="btn btn-sm btn-outline-primary ml-2"
 								ngbPanelToggle>{{acc.isExpanded('toggle-'+planning[p]?.loadid)
 								? '🔼':'🔽' }}</button>
 						</div>

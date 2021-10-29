@@ -37,6 +37,7 @@ export class RejectComponent implements OnInit {
 			salesunit: new FormControl(null, [Validators.required]),
 			quantity: new FormControl(null, [Validators.required, Validators.minLength(1), Validators.maxLength(15), Validators.min(1)]),
 			reason: new FormControl(null, [Validators.required]),
+			rejecttype: new FormControl(null, [Validators.required]),
 			commentario: new FormControl(null),
 			invoice: new FormControl(null)
 		});

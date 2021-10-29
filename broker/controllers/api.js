@@ -32,6 +32,11 @@ exports.install = function() {
 	ROUTE('GET     /api/tablagen/        *Tablagen --> query');
 	ROUTE('GET     /api/tablagen/{id}/   *Tablagen --> read');
 
+	// Report
+	ROUTE('GET     /api/report/rejects/{fechainicio}/{fechafin}        *ReportReject --> query');
+	ROUTE('GET     /api/report/returns/{fechainicio}/{fechafin}        *ReportReturn --> query');
+	ROUTE('GET     /api/report/accessories/{fechainicio}/{fechafin}    *ReportAccessory --> query');
+
 	// Usuarios
 	ROUTE('POST     /api/usuarios/        *Usuarios --> insert');
 };

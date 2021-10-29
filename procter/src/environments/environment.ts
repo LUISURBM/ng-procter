@@ -4,7 +4,8 @@
 
 export const environment = {
   production: false,
-  procter_api: 'http://localhost:4200/'
+  procter_api: 'http://localhost:4200/',
+  sheets: { api: '621286308643-mpakhhglu11nf79ma3i3c4mutl6avnht.apps.googleusercontent.com', }
 };
 
 /*

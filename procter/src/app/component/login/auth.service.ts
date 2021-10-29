@@ -31,4 +31,8 @@ export class AuthService {
         }
       });
   }
+  logout(){
+    this.currentSession.next({ username: undefined })
+    this.router.navigate(['/login']);
+  }
 }

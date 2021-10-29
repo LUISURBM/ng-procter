@@ -9,21 +9,21 @@ export const ROUTES: RouteInfo[] = [
     extralink: false,
     submenu: []
   }, {
-    path: '/component/reject',
+    path: '/component/rejects',
     title: 'Rechazo',
     icon: 'mdi mdi-grid-off',
     class: '',
     extralink: false,
     submenu: []
-  }, {
-    path: '/component/return',
+  },{
+    path: '/component/returns',
     title: 'Devolución',
     icon: 'mdi mdi-file-restore',
     class: '',
     extralink: false,
     submenu: []
   }, {
-    path: '/component/accessory',
+    path: '/component/accessories',
     title: 'Accesorio',
     icon: 'mdi mdi-widgets',
     class: '',

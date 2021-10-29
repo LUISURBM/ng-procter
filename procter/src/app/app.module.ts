@@ -32,6 +32,9 @@ import { ThemeService } from 'ng2-charts';
 import localeEsCo from '@angular/common/locales/es-CO';
 import { LoginComponent } from './component/login/login.component';
 import { AuthGuardService } from './component/login/auth-guard';
+
+
+
 registerLocaleData(localeEsCo);
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
@@ -60,7 +63,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
 		PerfectScrollbarModule,
 		NgbModule,
 		HttpClientModule,
-		RouterModule.forRoot(Approutes, { useHash: false })
+		RouterModule.forRoot(Approutes, { useHash: true }),
 	],
 	providers: [
 		{

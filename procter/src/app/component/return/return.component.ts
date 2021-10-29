@@ -96,6 +96,7 @@ export class DevolucionComponent implements OnInit {
 					resp.forEach(e => this.toastService.show(e.error, { classname: 'bg-danger text-light', delay: 15000 }));
 			},
 			error: (error: any) => {
+				debugger
 				error.error.forEach(e => this.toastService.show(e.error, { classname: 'bg-danger text-light', delay: 15000 }));
 
 			}

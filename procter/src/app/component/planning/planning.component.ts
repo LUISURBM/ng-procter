@@ -96,6 +96,14 @@ export class PlanningComponent implements OnInit {
 		const status = +this.planning[p].reg_status;
 		this.planning[p].reg_status = status === 0 || (status > 3)? 1 : (status+1);
 	}
+	rechazar(p:number){
+		this.planning[p].reg_status = 2;
+		this.save(this.planning[p], p);
+	}
+	aprobar(p:number){
+		this.planning[p].reg_status = 1;
+		this.save(this.planning[p], p);
+	}
 	clear(control, group) {
 		(this.plannings.controls[group] as FormGroup).controls[control].reset()
 	}

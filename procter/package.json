@@ -15,6 +15,7 @@
     "@angular/common": "~8.2.14",
     "@angular/compiler": "~8.2.14",
     "@angular/core": "~8.2.14",
+    "@angular/fire": "^5.4.2",
     "@angular/forms": "~8.2.14",
     "@angular/localize": "^12.0.2",
     "@angular/platform-browser": "~8.2.14",
@@ -23,13 +24,17 @@
     "@ng-bootstrap/ng-bootstrap": "^7.0.0",
     "chart.js": "^2.8.0",
     "core-js": "^2.6.9",
+    "firebase": ">= 5.5.7 <8",
+    "googleapis": "^89.0.0",
+    "ng-webdatarocks": "^1.4.4",
     "ng2-charts": "^2.4.2",
     "ngx-perfect-scrollbar": "6.1.0",
-    "sass": "^1.29.0",
     "rxjs": "~6.4.0",
     "rxjs-compat": "^6.6.0",
+    "sass": "^1.29.0",
     "screenfull": "^4.2.0",
     "tslib": "^1.10.0",
+    "webdatarocks": "^1.4.4",
     "zone.js": "~0.9.1"
   },
   "devDependencies": {
@@ -51,6 +56,11 @@
     "protractor": "~7.0.0",
     "ts-node": "~7.0.0",
     "tslint": "~5.15.0",
-    "typescript": "^3.5.3"
+    "typescript": "^3.5.3",
+    "@angular-devkit/architect": "<0.900 || ^0.900.0-0 || ^9.0.0-0",
+    "firebase-tools": "^7.12.0",
+    "fuzzy": "^0.1.3",
+    "inquirer": "^6.2.2",
+    "inquirer-autocomplete-prompt": "^1.0.1"
   }
 }

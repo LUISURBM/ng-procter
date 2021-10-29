@@ -1,5 +1,6 @@
 NEWSCHEMA('Planning', function (schema) {
 	schema.define('loadid', Number);
+	schema.define('reg_status', 'String(1)', true);
 	schema.define('drivername', 'String(80)', true);
 	schema.define('loadorderid', 'String(20)', true);
 	schema.define('licenseplate', 'String(20)', true);

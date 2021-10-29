@@ -83,11 +83,21 @@
 							<h5 class="sub-title">Información del rechazo:</h5>
 							<div class="row mobile-inputs">
 								<div class="col-12 col-sm-4">
-									<label class="col-form-label">Motivo:</label>
+									<label class="col-form-label">Tipo:</label>
 									<div class="ml-auto">
 										<select class="custom-select form-control" formControlName="reason">
 											<option selected disabled value>-- SIN SELECCIÓN --</option>
 											<option selected blankoption *ngFor="let bundle of bundleSrv.rejectTypes"
+												[value]="bundle.table_code">{{bundle.descripcion}}</option>
+										</select>
+									</div>
+								</div>
+								<div class="col-12 col-sm-4">
+									<label class="col-form-label">Motivo:</label>
+									<div class="ml-auto">
+										<select class="custom-select form-control" formControlName="rejecttype">
+											<option selected disabled value>-- SIN SELECCIÓN --</option>
+											<option selected blankoption *ngFor="let bundle of bundleSrv.rejectReasons"
 												[value]="bundle.table_code">{{bundle.descripcion}}</option>
 										</select>
 									</div>

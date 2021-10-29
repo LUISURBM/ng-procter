@@ -43,8 +43,8 @@
 }
 
 .card-subtitle {
-  margin-top: -($card-spacer-y / 2);
-  margin-bottom: 0;
+  margin-top: ($card-spacer-y / 2);
+  margin-bottom: ($card-spacer-x / 2);
 }
 
 .card-text:last-child {

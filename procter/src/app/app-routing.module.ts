@@ -14,7 +14,7 @@ export const Approutes: Routes = [
     }
   },
   {
-    path: '', canActivate: [AuthGuardService],
+    path: '', /*canActivate: [AuthGuardService]*/
     component: FullComponent,
     children: [
       { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
